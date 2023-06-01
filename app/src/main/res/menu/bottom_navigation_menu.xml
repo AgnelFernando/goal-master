@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigationPlanner"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_home_24"
+        android:title="@string/bottom_navigation_planner_label"/>
+    <item
+        android:id="@+id/navigationGoals"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_flag_circle_24"
+        android:title="@string/bottom_navigation_goals_label"
+        />
+</menu>

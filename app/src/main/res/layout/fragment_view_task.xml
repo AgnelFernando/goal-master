@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.goalmaster.task.view.viewtask.ViewTaskViewModel" />
+
+        <import type="com.goalmaster.task.TaskState" />
+
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lavender_web">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/task_view_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="@color/space_cadet"
+                    android:contentDescription="@string/task_view_back_button_cd"
+                    android:padding="15dp"
+                    android:src="@drawable/baseline_arrow_back_ios_new_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/task_view_edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="18dp"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="@color/space_cadet"
+                    android:contentDescription="@string/edit_button_in_task_view_cd"
+                    android:padding="15dp"
+                    android:src="@drawable/round_edit_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/task_view_back_button" />
+
+                <TextView
+                    android:id="@+id/task_goal_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/oval_background"
+                    android:paddingStart="30dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="30dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{vm.goal.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/task_view_back_button"
+                    tools:text="AI Book" />
+
+                <TextView
+                    android:id="@+id/task_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@{vm.task.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/task_goal_name"
+                    tools:text="Complete 10 pages" />
+
+                <TextView
+                    android:id="@+id/task_created_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/task_created_title_text"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/task_name" />
+
+                <TextView
+                    android:id="@+id/task_created"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:dateText="@{vm.task.created}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/task_created_title"
+                    app:layout_constraintTop_toBottomOf="@id/task_created_title"
+                    tools:text="05/03/2023" />
+
+                <TextView
+                    android:id="@+id/taskDoDTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/view_task_dod_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/task_created" />
+
+                <TextView
+                    android:id="@+id/taskDoD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.task.definitionOfDone}"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/taskDoDTitle"
+                    tools:text="Complete till page 203" />
+
+                <TextView
+                    android:id="@+id/task_description_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/view_task_description_title"
+                    android:visibility="@{vm.taskDescription == null ? View.GONE : View.VISIBLE}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/taskDoD" />
+
+                <TextView
+                    android:id="@+id/task_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="@{vm.taskDescription}"
+                    android:visibility="@{vm.taskDescription == null ? View.GONE : View.VISIBLE}"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/task_description_title"
+                    tools:text="Artificial Intelligence: A Modern Approach is a university textbook on artificial intelligence, written by Stuart J. Russell and Peter Norvig. " />
+
+                <TextView
+                    android:id="@+id/event_duration_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/event_duration_title"
+                    android:visibility="@{vm.taskDuration != null ? View.VISIBLE : View.GONE}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/task_description" />
+
+                <TextView
+                    android:id="@+id/event_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.taskDuration}"
+                    android:visibility="@{vm.taskDuration != null ? View.VISIBLE : View.GONE}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/event_duration_title"
+                    tools:text="3 Hours"/>
+
+
+                <TextView
+                    android:id="@+id/event_time_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/event_time_title"
+                    android:visibility="@{vm.task.state != TaskState.UNPLANNED ? View.VISIBLE : View.INVISIBLE}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/task_description"
+                    tools:visibility="invisible"/>
+
+                <TextView
+                    android:id="@+id/event_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2:45 pm"
+                    android:visibility="@{vm.task.state != TaskState.UNPLANNED ? View.VISIBLE : View.INVISIBLE}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/event_time_title"
+                    tools:visibility="invisible"/>
+
+                <TextView
+                    android:id="@+id/event_time_hyphen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:visibility="@{vm.task.state != TaskState.UNPLANNED ? View.VISIBLE : View.INVISIBLE}"
+                    android:layout_marginStart="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    app:layout_constraintEnd_toStartOf="@id/event_end_time"
+                    app:layout_constraintStart_toEndOf="@id/event_start_time"
+                    app:layout_constraintTop_toTopOf="@id/event_start_time"
+                    tools:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/event_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4:45 pm"
+                    android:visibility="@{vm.task.state != TaskState.UNPLANNED ? View.VISIBLE : View.INVISIBLE}"
+                    android:layout_marginStart="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    app:layout_constraintStart_toEndOf="@id/event_time_hyphen"
+                    app:layout_constraintTop_toBottomOf="@id/event_time_title"
+                    tools:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/event_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25/05/2023"
+                    android:visibility="@{vm.task.state != TaskState.UNPLANNED ? View.VISIBLE : View.INVISIBLE}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintStart_toStartOf="@id/task_goal_name"
+                    app:layout_constraintTop_toBottomOf="@id/event_start_time"
+                    tools:visibility="invisible"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:layout_constraintTop_toBottomOf="@id/event_date" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/taskActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/oval_background_1"
+            android:paddingStart="110dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="110dp"
+            android:paddingBottom="15dp"
+            android:text="@{vm.task.state == TaskState.UNPLANNED ? @string/plan_button_text : @string/done_button_text }"
+            android:visibility="@{vm.task.state != TaskState.DONE ? View.VISIBLE : View.GONE}"
+            app:backgroundTint="@color/space_cadet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/done_button_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

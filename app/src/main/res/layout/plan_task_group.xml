@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="task"
+            type="com.goalmaster.task.data.entity.Task" />
+
+        <variable
+            name="month"
+            type="String" />
+
+        <variable
+            name="day"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="5dp">
+
+        <View
+            android:id="@+id/plan_task_hr_1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/gun_metal"
+            app:layout_constraintEnd_toStartOf="@id/plan_task_hr_2"
+            app:layout_constraintHorizontal_weight="0.25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/plan_task_hr_2"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/aquamarine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.75"
+            app:layout_constraintStart_toEndOf="@+id/plan_task_hr_1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/rounded_right_corners"
+            android:backgroundTint="@color/aquamarine"
+            android:gravity="end"
+            android:padding="5dp"
+            android:paddingEnd="15dp"
+            android:text="@{task.name}"
+            android:textAlignment="gravity"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/gun_metal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/plan_task_hr_1"
+            tools:ignore="RtlSymmetry"
+            tools:text="18" />
+
+        <TextView
+            android:id="@+id/event_date_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{month}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/cadet_gray"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/event_date"
+            app:layout_constraintStart_toStartOf="@id/event_date"
+            app:layout_constraintTop_toBottomOf="@id/event_date"
+            tools:text="Aug" />
+
+        <TextView
+            android:id="@+id/event_date_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{day}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toStartOf="@id/event_date_month"
+            app:layout_constraintTop_toBottomOf="@id/event_date_month"
+            tools:text="Mon" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/plan_tasks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/plan_task_hr_2"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="3"
+            tools:listitem="@layout/plan_task_small" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

@@ -1,0 +1,48 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.GoalMaster" parent="Theme.MaterialComponents.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/emerald</item>
+        <item name="colorPrimaryVariant">@color/medium_aquamarine</item>
+        <item name="colorOnPrimary">@color/white_dim</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/jasmine</item>
+        <item name="colorSecondaryVariant">@color/medium_champagne</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" >@color/white</item>
+        <!-- Customize your theme here. -->
+        <item name="actionBarStyle">@style/GoalMaster.ActionBar</item>
+    </style>
+
+    <style name="GoalMaster.ActionBar" parent="@style/Widget.MaterialComponents.ActionBar.Primary">
+        <item name="background">@color/white</item>
+    </style>
+
+    <style name="Theme.GoalMaster.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GoalMaster.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GoalMaster.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="GoalNameMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">?attr/colorOnSecondary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="GoalProgressBar" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="indicatorColor">@color/russian_violet</item>
+        <item name="trackColor">@color/lavender_web</item>
+        <item name="trackCornerRadius">4dp</item>
+        <item name="trackThickness">8dp</item>
+    </style>
+
+    <style name="GoalProgressBarValue" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/russian_violet</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+</resources>

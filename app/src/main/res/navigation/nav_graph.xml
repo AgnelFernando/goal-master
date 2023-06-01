@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/plannerFragment">
+
+    <fragment
+        android:id="@+id/createGoalFragment"
+        android:name="com.goalmaster.goal.view.create.CreateGoalFragment"
+        android:label="CreateGoalFragment"
+        tools:layout="@layout/fragment_create_goal" />
+    <fragment
+        android:id="@+id/goalListFragment"
+        android:name="com.goalmaster.goal.view.goallist.GoalListFragment"
+        android:label="GoalListFragment"
+        tools:layout="@layout/fragment_goal_list">
+        <action
+            android:id="@+id/action_goalListFragment_to_createGoalFragment"
+            app:destination="@id/createGoalFragment" />
+        <action
+            android:id="@+id/action_goalListFragment_to_plannerFragment"
+            app:destination="@id/plannerFragment" />
+        <action
+            android:id="@+id/action_goalListFragment_to_editGoalFragment"
+            app:destination="@id/editGoalFragment" />
+        <action
+            android:id="@+id/action_goalListFragment_to_viewGoalFragment"
+            app:destination="@id/viewGoalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editGoalFragment"
+        android:name="com.goalmaster.goal.view.edit.EditGoalFragment"
+        android:label="EditGoalFragment"
+        tools:layout="@layout/fragment_edit_goal">
+        <argument
+            android:name="goalId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/plannerFragment"
+        android:name="com.goalmaster.plan.view.planner.PlannerFragment"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_plannerFragment_to_goalListFragment"
+            app:destination="@id/goalListFragment" />
+        <action
+            android:id="@+id/action_plannerFragment_to_createPlanFragment"
+            app:destination="@id/createPlanFragment" />
+        <action
+            android:id="@+id/action_plannerFragment_to_taskPlannerFragment"
+            app:destination="@id/taskPlannerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPlanFragment"
+        android:name="com.goalmaster.plan.view.create.CreatePlanFragment"
+        android:label="fragment_create_plan"
+        tools:layout="@layout/fragment_create_plan" />
+    <fragment
+        android:id="@+id/viewGoalFragment"
+        android:name="com.goalmaster.goal.view.viewgoal.ViewGoalFragment"
+        android:label="ViewGoalFragment">
+        <argument
+            android:name="goalId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_viewGoalFragment_to_createTaskFragment"
+            app:destination="@id/createTaskFragment" />
+        <action
+            android:id="@+id/action_viewGoalFragment_to_editGoalFragment"
+            app:destination="@id/editGoalFragment" />
+        <action
+            android:id="@+id/action_viewGoalFragment_to_viewTaskFragment"
+            app:destination="@id/viewTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTaskFragment"
+        android:name="com.goalmaster.task.view.create.CreateTaskFragment"
+        android:label="CreateTaskFragment">
+        <argument
+            android:name="goalId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewTaskFragment"
+        android:name="com.goalmaster.task.view.viewtask.ViewTaskFragment"
+        android:label="ViewTaskFragment">
+        <argument
+            android:name="taskId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_viewTaskFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+        <action
+            android:id="@+id/action_viewTaskFragment_to_taskPlannerFragment"
+            app:destination="@id/taskPlannerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="com.goalmaster.task.view.edit.EditTaskFragment"
+        android:label="fragment_edit_task"
+        tools:layout="@layout/fragment_edit_task">
+        <argument
+            android:name="taskId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_editTaskFragment_to_viewGoalFragment"
+            app:destination="@id/viewGoalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskPlannerFragment"
+        android:name="com.goalmaster.plan.view.addtask.TaskPlannerFragment"
+        android:label="TaskPlannerFragment" />
+</navigation>

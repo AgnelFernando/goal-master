@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.goalmaster.plan.view.planner.PlannerViewModel" />
+
+        <import type="com.goalmaster.plan.data.entity.PlanState" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:theme="@style/PlannerTheme">
+
+        <ImageButton
+            android:id="@+id/plan_lock_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="@color/gun_metal"
+            android:contentDescription="@string/task_view_back_button_cd"
+            android:elevation="8dp"
+            android:padding="15dp"
+            android:src="@{vm.plan.state == PlanState.LOCKED ? @drawable/baseline_lock_24 : @drawable/baseline_lock_open_24}"
+            android:visibility="@{vm.noPlan ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/baseline_lock_open_24"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/no_plans_image_cd"
+            android:scaleType="fitStart"
+            android:src="@drawable/no_plans"
+            android:visibility="@{vm.noPlan ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="150dp"
+            android:text="@string/no_plans_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/sandy_brown"
+            android:visibility="@{vm.noPlan ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/create_plan_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_plan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/oval_background_2"
+            android:paddingStart="40dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="40dp"
+            android:paddingBottom="20dp"
+            android:text="@string/create_a_plan_button_text"
+            android:textAllCaps="false"
+            android:textColor="@color/sea_salt"
+            android:textSize="20sp"
+            android:visibility="@{vm.noPlan ? View.VISIBLE : View.GONE}"
+            app:backgroundTint="@color/rose_pompadour"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="@{vm.noPlan ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/plan_lock_button"
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/current_plan_title"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="@string/current_plan_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColor="@color/dim_grey"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/current_plan_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/box_elevation"
+                    android:backgroundTint="@color/gun_metal"
+                    android:elevation="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/current_plan_title">
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:background="@drawable/plan_banner"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/plan_due_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="@{vm.dueDate}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="May'30" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.dueDateIn}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="@id/plan_due_date"
+                        app:layout_constraintTop_toBottomOf="@id/plan_due_date"
+                        tools:text="7 days left" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/plan_tasks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/current_plan_banner"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/plan_task_group" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_task_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="25dp"
+            android:contentDescription="@string/add_task_to_plan"
+            android:src="@drawable/ic_baseline_add_24"
+            android:visibility="@{vm.plan.state == PlanState.CREATED ? View.VISIBLE : View.GONE}"
+            app:backgroundTint="@color/white"
+            app:backgroundTintMode="src_over"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:elevation="24dp"
+            app:itemIconSize="34dp"
+            app:labelVisibilityMode="unlabeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_navigation_menu" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.goalmaster.task.view.create.CreateTaskViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/createTaskAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/createTaskToolbar"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                app:navigationIcon="@drawable/ic_detail_back_no_circle"
+                app:title="@string/create_task_title"
+                tools:title="@string/create_task_title">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/createGoalSaveButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:text="@string/save_button_text"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/createGoalCircularProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/gray_transparent"
+            android:indeterminate="true"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:show="@{vm.dataLoading}"
+            tools:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createTaskAppbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createTaskGoalInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:enabled="false"
+                    android:hint="@string/create_task_goal_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createTaskGoalInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints="no"
+                    android:background="@color/fluorescent_grey"
+                    android:inputType="textCapSentences"
+                    android:text="@{vm.goal.name}"
+                    tools:ignore="TextContrastCheck"
+                    tools:text="AI book"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createTaskNameInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/name_placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/createTaskGoalInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createTaskNameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:autofillHints="no"
+                        android:background="@color/fluorescent_grey"
+                        android:inputType="textCapSentences"
+                        android:text="@={vm.name}"
+                        tools:ignore="TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createTaskUnitSizeInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/task_unit_size_placeholder"
+                    app:layout_constraintTop_toBottomOf="@id/createTaskNameInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createTaskUnitSizeInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/fluorescent_grey"
+                        android:inputType="number"
+                        android:text="@={vm.unitSize}"
+                        tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createTaskDodInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/dod_placeholder"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="100"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/createTaskUnitSizeInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createTaskDodInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:autofillHints="no"
+                        android:background="@color/fluorescent_grey"
+                        android:inputType="textCapSentences"
+                        android:text="@={vm.dod}"
+                        tools:ignore="TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createTaskDurationInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/duration_placeholder"                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/createTaskDodInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createTaskDurationInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:autofillHints="no"
+                        android:background="@color/fluorescent_grey"
+                        android:inputType="none"
+                        android:text="@{vm.duration.toString()}"
+                        tools:ignore="TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createTaskDescriptionInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/description_placeholder"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="150"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/createTaskDurationInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:autofillHints="no"
+                        android:background="@color/fluorescent_grey"
+                        android:text="@={vm.description}"
+                        tools:ignore="TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:layout_constraintTop_toBottomOf="@id/createTaskDescriptionInputLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

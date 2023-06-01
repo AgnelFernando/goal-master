@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="pink_200">#DE0654</color>
+    <color name="grey_200">#D0DCE8</color>
+
+    <!--   color for the app bar and other primary UI elements -->
+    <color name="colorPrimary">#3F51B5</color>
+
+    <!--   a darker variant of the primary color, used for
+           the status bar (on Android 5.0+) and contextual app bars -->
+    <color name="colorPrimaryDark">#303F9F</color>
+
+    <!--   a secondary color for controls like checkboxes and text fields -->
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="russian_violet">#240046</color>
+    <color name="lavender_web">#E6DFF1</color>
+    <color name="black_shadows">#B5ACAC</color>
+    <color name="dark_liver">#655B5B</color>
+    <color name="silver_metallic">#ADABAF</color>
+    <color name="oxford_blue">#121632</color>
+    <color name="tuscan_red">#773E3E</color>
+    <color name="jet">#323236</color>
+    <color name="fluorescent_grey">#4DE8E6E6</color>
+
+    <color name="emerald">#40c886</color>
+    <color name="silver_sand">#c4cbd2</color>
+    <color name="white_dim">#fafafc</color>
+    <color name="light_pink">#fbabba</color>
+    <color name="jasmine">#ffe689</color>
+    <color name="medium_champagne">#F3E099</color>
+    <color name="medium_aquamarine">#72d3a2</color>
+    <color name="red">#D7FF0000</color>
+    <color name="yellow">#D3FFFF00</color>
+    <color name="gray_transparent">#4DCFCFCF</color>
+    <color name="pistachio">#A8D26D</color>
+
+    <color name="task_unplanned">#ebebeb</color>
+    <color name="task_planned">#f55d2f</color>
+    <color name="task_done">#31f658</color>
+    <color name="space_cadet">#1b1a42</color>
+    <color name="sandy_brown">#FBA34B</color>
+    <color name="sea_salt">#F9FAFB</color>
+    <color name="rose_pompadour">#FC7F9D</color>
+    <color name="gun_metal">#192b33</color>
+    <color name="honey_dew">#D4F7E4</color>
+    <color name="dim_grey">#5A6162</color>
+    <color name="aquamarine">#5CE4A8</color>
+    <color name="cadet_gray">#919898</color>
+</resources>

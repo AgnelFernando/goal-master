@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="eventTime"
+            type="String" />
+
+        <variable
+            name="taskName"
+            type="String" />
+
+        <variable
+            name="goalName"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/task_plan_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{eventTime}"
+            android:textColor="@color/cadet_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="11:00 AM - 12:00 PM" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/baseline_more_vert_24"
+            android:contentDescription="@string/plan_task_options_cd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/task_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@{taskName}"
+            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_plan_time"
+            tools:text="Complete 10 pages" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/oval_background_1"
+            android:backgroundTint="@color/honey_dew"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="5dp"
+            android:text="@{goalName}"
+            android:textColor="@color/gun_metal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_name_text"
+            tools:text="goal" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

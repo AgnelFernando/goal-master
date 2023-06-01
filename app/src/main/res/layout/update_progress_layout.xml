@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="goalId"
+            type="Long" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateGoalValueInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:hint="@string/create_goal_update_value_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updateGoalValueInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#4DE8E6E6"
+                android:inputType="number"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </FrameLayout>
+
+</layout>

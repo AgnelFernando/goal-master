@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="taskId"
+            type="Long" />
+
+        <variable
+            name="taskName"
+            type="String" />
+
+        <variable
+            name="duration"
+            type="String" />
+
+        <variable
+            name="goalName"
+            type="String" />
+
+        <variable
+            name="isSelected"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:background="@drawable/box_elevation"
+        android:elevation="8dp"
+        android:backgroundTint="@{isSelected ? @color/medium_champagne : @color/grey_200}"
+        tools:backgroundTint="@color/grey_200">
+
+        <TextView
+            android:id="@+id/task_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@{taskName}"
+            android:textColor="@color/space_cadet"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Complete 10 pages" />
+
+        <TextView
+            android:id="@+id/task_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{duration}"
+            android:textColor="@color/cadet_gray"
+            android:textSize="18sp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="2h 20m" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/oval_background_1"
+            android:backgroundTint="@color/honey_dew"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="5dp"
+            android:text="@{goalName}"
+            android:textColor="@color/gun_metal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_name_text"
+            tools:text="goal" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

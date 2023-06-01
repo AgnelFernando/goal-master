@@ -1,0 +1,89 @@
+package com.goalmaster.goal.data.source
+
+import com.goalmaster.Result
+import com.goalmaster.goal.data.entity.Goal
+import com.goalmaster.goal.view.create.CreateGoalRequest
+import com.goalmaster.task.data.entity.Task
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
+import java.util.Date
+
+class LocalGoalDataSource(
+    private val goalDao: GoalDao, private val ioDispatcher: CoroutineDispatcher
+    ): GoalDataSource {
+
+    override suspend fun createGoal(request: CreateGoalRequest)
+    : Result<Unit> = withContext(ioDispatcher) {
+        return@withContext try {
+            val goal = Goal(name = request.name, description = request.description,
+                            definitionOfDone = request.dod, totalUnits = request.total,
+                            dueDate = request.dueDate)
+            goalDao.insert(goal)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override fun observeActiveGoals(): Flow<List<Goal>> {
+        return goalDao.observeActiveGoals()
+    }
+
+    override suspend fun updateCompletedUnits(id: Long, completed: Int)
+    : Result<Unit> = withContext(ioDispatcher) {
+        return@withContext try {
+            val goal = goalDao.findById(id)!!
+            val newCompleted = goal.completedUnits + completed
+            if (newCompleted >= goal.totalUnits) {
+                goal.completedUnits = goal.totalUnits
+            } else {
+                goal.completedUnits = newCompleted
+            }
+            goal.updatedOn = Date()
+            goalDao.insert(goal)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override suspend fun getGoal(goalId: Long): Result<Goal> = withContext(ioDispatcher) {
+        return@withContext try {
+            val goal = goalDao.findById(goalId)
+            if (goal == null) {
+                Result.Error(Exception("Goal not found!"))
+            } else {
+                Result.Success(goal)
+            }
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override fun observeGoalTasks(goalId: Long): Flow<List<Task>> {
+        return goalDao.observeGoalTasks(goalId)
+    }
+
+    override fun observeGoal(goalId: Long): Flow<Goal> {
+        return goalDao.observeGoal(goalId)
+    }
+
+    override suspend fun saveGoal(goal: Goal): Result<Unit> = withContext(ioDispatcher) {
+        return@withContext try {
+            goalDao.insert(goal)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override suspend fun delete(id: Long): Result<Unit>  = withContext(ioDispatcher) {
+        return@withContext try {
+            goalDao.deleteById(id)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+}

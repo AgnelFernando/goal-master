@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.goalmaster.plan.view.create.CreatePlanViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/createPlanAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/createPlanToolbar"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                app:navigationIcon="@drawable/ic_detail_back_no_circle"
+                app:title="@string/create_plan_title"
+                tools:title="@string/create_plan_title">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/createPlanSaveButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:text="@string/save_button_text"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            android:id="@+id/createPlanStartDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/start_date_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createPlanAppbar" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/createPlanStartDateInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:hint="@string/date_input_hint"
+            app:layout_constraintEnd_toStartOf="@+id/createPlanStartTimeInputLayout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createPlanStartDateTitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/createPlanStartDateInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/fluorescent_grey"
+                android:dateInput="@{vm.startDate.toLocalDate()}"
+                android:focusable="false"
+                android:inputType="none"
+                tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/createPlanStartTimeInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:hint="@string/time_input_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/createPlanStartDateInputLayout"
+            app:layout_constraintTop_toTopOf="@id/createPlanStartDateInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/createPlanStartTimeInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/fluorescent_grey"
+                android:inputType="none"
+                android:timeInput="@{vm.startDate.toLocalTime()}"
+                tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/createPlanEndDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/end_date_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createPlanStartDateInputLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/createPlanEndDateInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:hint="@string/date_input_hint"
+            app:layout_constraintEnd_toStartOf="@+id/createPlanEndTimeInputLayout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createPlanEndDateTitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/createPlanEndDateInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/fluorescent_grey"
+                android:dateInput="@{vm.endDate.toLocalDate()}"
+                android:focusable="false"
+                android:inputType="none"
+                tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/createPlanEndTimeInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:hint="@string/time_input_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/createPlanEndDateInputLayout"
+            app:layout_constraintTop_toTopOf="@id/createPlanEndDateInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/createPlanEndTimeInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/fluorescent_grey"
+                android:inputType="none"
+                android:timeInput="@{vm.endDate.toLocalTime()}"
+                tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

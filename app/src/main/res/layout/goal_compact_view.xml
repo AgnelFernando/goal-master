@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.goalmaster.goal.data.entity.GoalData" />
+
+        <variable
+            name="goal"
+            type="com.goalmaster.goal.data.entity.GoalData" />
+
+        <variable
+            name="progressPercentage"
+            type="Integer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/goalName"
+            style="@style/GoalNameMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@{goal.name}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Othello Book" />
+
+        <TextView
+            android:id="@+id/goalLastUpdated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="?colorOnSecondary"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/goalName"
+            app:layout_constraintTop_toBottomOf="@+id/goalName"
+            tools:text="1 minute ago" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            style="@style/GoalProgressBar"
+            android:id="@+id/goalProgress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="25dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:progress="@{progressPercentage}"
+            app:layout_constraintEnd_toStartOf="@+id/progressValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goalLastUpdated"
+            tools:progress="20" />
+
+        <TextView
+            style="@style/GoalProgressBarValue"
+            android:id="@+id/progressValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="14sp"
+            android:text="@{progressPercentage.toString() + '%'}"
+            app:layout_constraintBottom_toBottomOf="@+id/goalProgress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goalProgress"
+            app:layout_constraintTop_toTopOf="@+id/goalProgress"
+            tools:ignore="SmallSp"
+            tools:text="20%"/>
+
+        <TextView
+            style="@style/GoalProgressBarValue"
+            android:id="@+id/progressValueTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{goal.totalUnits + ""}'
+            app:layout_constraintEnd_toEndOf="@+id/goalProgress"
+            app:layout_constraintTop_toBottomOf="@+id/goalProgress"
+            tools:ignore="SmallSp"
+            tools:text="122" />
+
+        <TextView
+            style="@style/GoalProgressBarValue"
+            android:id="@+id/progressValueSlash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:paddingBottom="4dp"
+            android:text="@string/progress_values_separator"
+            app:layout_constraintEnd_toStartOf="@+id/progressValueTotal"
+            app:layout_constraintTop_toTopOf="@+id/progressValueTotal"
+            tools:ignore="SmallSp"
+            tools:text="/" />
+
+        <TextView
+            style="@style/GoalProgressBarValue"
+            android:id="@+id/progressValueCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text='@{goal.completedUnits + ""}'
+            app:layout_constraintEnd_toStartOf="@+id/progressValueSlash"
+            app:layout_constraintTop_toTopOf="@+id/progressValueSlash"
+            tools:ignore="SmallSp"
+            tools:text="22" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.goalmaster.goal.view.create.CreateGoalViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/createGoalAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/createGoalToolbar"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                app:navigationIcon="@drawable/ic_detail_back_no_circle"
+                app:title="@string/create_goal_title"
+                tools:title="@string/create_goal_title">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/createGoalSaveButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:text="@string/save_button_text"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/createGoalCircularProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/gray_transparent"
+            android:indeterminate="true"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:show="@{vm.dataLoading}"
+            tools:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createGoalAppbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createGoalNameInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/name_placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createGoalNameInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:autofillHints="no"
+                            android:background="@color/fluorescent_grey"
+                            android:inputType="textCapSentences"
+                            android:text="@={vm.name}"
+                            tools:ignore="TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createGoalTotalInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/create_goal_total_units_hint"
+                    app:layout_constraintTop_toBottomOf="@id/createGoalNameInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createGoalTotalInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/fluorescent_grey"
+                        android:inputType="number"
+                        android:text="@={vm.total}"
+                        tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createGoalDodInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/dod_placeholder"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="100"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/createGoalTotalInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createGoalDodInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:autofillHints="no"
+                        android:background="@color/fluorescent_grey"
+                        android:inputType="textCapSentences"
+                        android:text="@={vm.dod}"
+                        tools:ignore="TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createGoalDescriptionInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/description_placeholder"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="150"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/createGoalDodInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:autofillHints="no"
+                        android:background="@color/fluorescent_grey"
+                        android:text="@={vm.description}"
+                        tools:ignore="TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createGoalDueDateInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/create_goal_due_date_input_hint"
+                    app:layout_constraintTop_toBottomOf="@id/createGoalDescriptionInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createGoalDueDateInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/fluorescent_grey"
+                        android:focusable="false"
+                        android:dateInput="@{vm.dueDate}"
+                        tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:layout_constraintTop_toBottomOf="@id/createGoalDueDateInputLayout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
