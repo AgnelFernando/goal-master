@@ -139,6 +139,26 @@
                         tools:ignore="TextContrastCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createGoalDueDateInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:hint="@string/create_goal_due_date_input_hint"
+                    app:layout_constraintTop_toBottomOf="@id/createGoalDodInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createGoalDueDateInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/fluorescent_grey"
+                        android:focusable="false"
+                        android:dateInput="@{vm.dueDate}"
+                        tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/createGoalDescriptionInputLayout"
@@ -152,7 +172,7 @@
                     app:counterMaxLength="150"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/createGoalDodInputLayout">
+                    app:layout_constraintTop_toBottomOf="@id/createGoalDueDateInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -163,31 +183,10 @@
                         tools:ignore="TextContrastCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/createGoalDueDateInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:hint="@string/create_goal_due_date_input_hint"
-                    app:layout_constraintTop_toBottomOf="@id/createGoalDescriptionInputLayout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/createGoalDueDateInput"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/fluorescent_grey"
-                        android:focusable="false"
-                        android:dateInput="@{vm.dueDate}"
-                        tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/createGoalDueDateInputLayout" />
+                    app:layout_constraintTop_toBottomOf="@id/createGoalDescriptionInputLayout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

@@ -73,15 +73,21 @@ object AppModule {
     }
 
     @Provides
-    fun providePlanTaskDao(appDatabase: AppDatabase): PlanDao {
+    fun providePlanDao(appDatabase: AppDatabase): PlanDao {
         return appDatabase.planDao()
+    }
+
+    @Provides
+    fun providePlanTaskDao(appDatabase: AppDatabase): PlanTaskDao {
+        return appDatabase.planTaskDao()
     }
 
     @Singleton
     @Provides
     fun provideLocalPlanDataSource(planDao: PlanDao,
+                                   planTaskDao: PlanTaskDao,
                                    ioDispatcher: CoroutineDispatcher): PlanDataSource {
-        return LocalPlanDataSource(planDao, ioDispatcher)
+        return LocalPlanDataSource(planDao, planTaskDao, ioDispatcher)
     }
 
     @Singleton

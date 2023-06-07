@@ -60,20 +60,3 @@ fun bindShow(mediaView: View, show: Boolean) {
         View.GONE
     }
 }
-
-fun Date?.relativeDateFormat(context: Context): String {
-    if (this == null) return context.getString(R.string.never)
-
-    val thenMillis: Long = this.time
-    if (thenMillis == 0L) {
-        return context.getString(R.string.never)
-    }
-    val nowMillis = System.currentTimeMillis()
-    return if (nowMillis - thenMillis < DateUtils.MINUTE_IN_MILLIS) {
-        context.getString(R.string.just_now)
-    } else DateUtils.getRelativeTimeSpanString(
-        thenMillis, nowMillis,
-        DateUtils.MINUTE_IN_MILLIS,
-        DateUtils.FORMAT_ABBREV_RELATIVE
-    ).toString()
-}

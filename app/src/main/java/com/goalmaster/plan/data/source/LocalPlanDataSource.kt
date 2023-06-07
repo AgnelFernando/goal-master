@@ -3,12 +3,16 @@ package com.goalmaster.plan.data.source
 import com.goalmaster.Result
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.entity.PlanState
+import com.goalmaster.plan.data.entity.PlanTask
+import com.goalmaster.task.data.entity.TaskWithData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class LocalPlanDataSource(
-    private val planDao: PlanDao, private val ioDispatcher: CoroutineDispatcher
+    private val planDao: PlanDao,
+    private val planTaskDao: PlanTaskDao,
+    private val ioDispatcher: CoroutineDispatcher
     ): PlanDataSource {
 
     override fun observeCurrentPlan(): Flow<Plan> {
@@ -24,7 +28,7 @@ class LocalPlanDataSource(
         }
     }
 
-    override suspend fun updateState(planId: Long, state: PlanState): Result<Unit>  = withContext(ioDispatcher) {
+    override suspend fun updateState(planId: Long, state: PlanState): Result<Unit> = withContext(ioDispatcher) {
         return@withContext try {
             val plan = planDao.findById(planId) ?: throw Exception("Not found")
             plan.state = state
@@ -33,5 +37,36 @@ class LocalPlanDataSource(
         } catch (exception: Exception) {
             Result.Error(exception)
         }
+    }
+
+    override suspend fun getCurrentPlan(): Result<Plan> = withContext(ioDispatcher) {
+        return@withContext try {
+            val plan = planDao.getCurrentPlan() ?: throw Exception("Not found")
+            Result.Success(plan)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override suspend fun savePlanTask(planTask: PlanTask) = withContext(ioDispatcher) {
+        return@withContext try {
+            planTaskDao.insert(planTask)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override suspend fun deletePlannedTask(planId: Long, taskId: Long) = withContext(ioDispatcher) {
+        return@withContext try {
+            planTaskDao.deleteById(planId, taskId)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override fun observeCurrentPlanTasks(): Flow<List<TaskWithData>> {
+        return planTaskDao.observeCurrentPlanTasks()
     }
 }

@@ -19,4 +19,6 @@ interface PlanDao : BaseDao<Plan> {
 
     @Query("""SELECT * FROM Task as t where t.goalId=:goalId order by created""")
     fun observeGoalTasks(goalId: Long): Flow<List<Task>>
+    @Query("""SELECT * FROM `Plan` as p where p.state='CREATED'""")
+    suspend fun getCurrentPlan(): Plan?
 }

@@ -21,5 +21,5 @@ interface TaskDataSource {
 
     fun observeTasksForPlan(): Flow<List<TaskWithData>>
 
-    suspend fun setTaskAsDone(task: Task): Result<Unit>
+    suspend fun updateTaskState(task: Task, state: TaskState): Result<Unit>
 }

@@ -13,6 +13,7 @@ import com.goalmaster.databinding.GoalCompactViewBinding
 import com.goalmaster.goal.data.entity.GoalData
 import com.goalmaster.relativeDateFormat
 
+
 class GoalListAdapter(private val goalOptions: GoalOptionImpl) :
     ListAdapter<GoalData, RecyclerView.ViewHolder>(GOAL_COMPARATOR) {
 
@@ -87,19 +88,19 @@ class GoalListAdapter(private val goalOptions: GoalOptionImpl) :
         return getItem(position).id
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+//    @SuppressLint("NotifyDataSetChanged")
     fun showMenu(position: Int) {
-        if (getItem(position).showMenu) {
-            getItem(position).showMenu = false
-            notifyDataSetChanged()
-            return
-        }
-
-        for (i in 0 until itemCount) {
-            getItem(i).showMenu = false
-        }
-        getItem(position).showMenu = true
-        notifyDataSetChanged()
+//        if (getItem(position).showMenu) {
+//            getItem(position).showMenu = false
+//            notifyDataSetChanged()
+//            return
+//        }
+//
+//        for (i in 0 until itemCount) {
+//            getItem(i).showMenu = false
+//        }
+//        getItem(position).showMenu = true
+//        notifyDataSetChanged()
     }
 
     fun isMenuShown(): Boolean {
@@ -111,12 +112,12 @@ class GoalListAdapter(private val goalOptions: GoalOptionImpl) :
         return false
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+//    @SuppressLint("NotifyDataSetChanged")
     fun closeMenu() {
-        for (i in 0 until itemCount) {
-            getItem(i).showMenu = false
-        }
-        notifyDataSetChanged()
+//        for (i in 0 until itemCount) {
+//            getItem(i).showMenu = false
+//        }
+//        notifyDataSetChanged()
     }
 
     class GoalViewHolder(item: View) : RecyclerView.ViewHolder(item) {

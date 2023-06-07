@@ -72,9 +72,8 @@ class PlanTaskListAdapter : ListAdapter<TaskWithData, RecyclerView.ViewHolder>(T
 
         fun bind(data: TaskWithData) {
             binding?.let {
-                it.taskId = data.task.id
-                it.taskName = data.task.name
-                it.goalName = data.goal.name
+                it.task = data.task
+                it.goal = data.goal
                 it.duration = data.task.durationInMin?.minutes?.toString()
                 itemView.invalidate()
             }

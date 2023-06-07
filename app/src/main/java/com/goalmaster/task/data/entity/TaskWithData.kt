@@ -3,7 +3,7 @@ package com.goalmaster.task.data.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 import com.goalmaster.goal.data.entity.Goal
-import com.goalmaster.plantask.PlanTask
+import com.goalmaster.plan.data.entity.PlanTask
 
 data class TaskWithData(
     @Embedded val task: Task,

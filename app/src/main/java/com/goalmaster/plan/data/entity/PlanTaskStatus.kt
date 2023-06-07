@@ -1,4 +1,4 @@
-package com.goalmaster.plantask
+package com.goalmaster.plan.data.entity
 
 enum class PlanTaskStatus {
     OPENED,

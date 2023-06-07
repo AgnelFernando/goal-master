@@ -73,7 +73,7 @@
                 android:gravity="center"
                 android:text="@string/no_tasks"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-                android:visibility="@{vm.taskForPlan.isEmpty() ? View.VISIBLE : View.GONE}"
+                android:visibility="@{vm.tasksForPlan.isEmpty() ? View.VISIBLE : View.GONE}"
                 tools:visibility="gone"/>
 
         </FrameLayout>

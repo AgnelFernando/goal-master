@@ -48,8 +48,10 @@ class DefaultTaskRepository(
             val taskResult = dataSource.getTaskWithData(id)
             taskResult as Result.Success
             val task = taskResult.data.task
-            goalDataSource.updateCompletedUnits(taskResult.data.goal.id, task.unitSize)
-            dataSource.setTaskAsDone(task)
+            if (state == TaskState.DONE) {
+                goalDataSource.updateCompletedUnits(taskResult.data.goal.id, task.unitSize)
+            }
+            dataSource.updateTaskState(task, state)
             Result.Success(Unit)
         } catch (ex: Exception) {
             Result.Error(ex)

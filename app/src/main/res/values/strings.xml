@@ -87,4 +87,6 @@
     <string name="no">No</string>
     <string name="plan_canceled_toast">Plan cancelled</string>
     <string name="task_planner_title">Plan Task</string>
+    <string name="planned_task_delete_button">Planned task delete button</string>
+    <string name="planned_task_view_button">Planned task view button</string>
 </resources>

@@ -98,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/fluorescent_grey"
+                android:focusable="false"
                 android:inputType="none"
                 android:timeInput="@{vm.startDate.toLocalTime()}"
                 tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
@@ -147,6 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:focusable="false"
             android:hint="@string/time_input_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

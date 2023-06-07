@@ -21,7 +21,6 @@ class ViewTaskFragment : Fragment() {
 
     private val args: ViewTaskFragmentArgs by navArgs()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

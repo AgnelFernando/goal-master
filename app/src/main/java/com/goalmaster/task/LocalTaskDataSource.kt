@@ -71,10 +71,12 @@ class LocalTaskDataSource(
         return taskDao.observeTasksForPlan()
     }
 
-    override suspend fun setTaskAsDone(task: Task): Result<Unit> = withContext(ioDispatcher) {
+    override suspend fun updateTaskState(task: Task, state: TaskState): Result<Unit> = withContext(ioDispatcher) {
         return@withContext try {
-            task.state = TaskState.DONE
-            taskDao.markPlanTaskCompletedByTaskId(task.id)
+            task.state = state
+            if (task.state == TaskState.DONE) {
+                taskDao.markPlanTaskCompletedByTaskId(task.id)
+            }
             taskDao.insert(task)
             Result.Success(Unit)
         } catch (exception: Exception) {

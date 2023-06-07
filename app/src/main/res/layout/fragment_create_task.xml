@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.goalmaster.task.view.create.CreateTaskViewModel" />
@@ -83,16 +84,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/createTaskGoalInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:autofillHints="no"
-                    android:background="@color/fluorescent_grey"
-                    android:inputType="textCapSentences"
-                    android:text="@{vm.goal.name}"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="AI book"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createTaskGoalInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:autofillHints="no"
+                        android:background="@color/fluorescent_grey"
+                        android:inputType="textCapSentences"
+                        android:text="@{vm.goal.name}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="AI book" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -172,7 +173,8 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="40dp"
-                    android:hint="@string/duration_placeholder"                    app:layout_constraintEnd_toEndOf="parent"
+                    android:hint="@string/duration_placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/createTaskDodInputLayout">
 
@@ -182,6 +184,7 @@
                         android:layout_height="65dp"
                         android:autofillHints="no"
                         android:background="@color/fluorescent_grey"
+                        android:focusable="false"
                         android:inputType="none"
                         android:text="@{vm.duration.toString()}"
                         tools:ignore="TextContrastCheck" />

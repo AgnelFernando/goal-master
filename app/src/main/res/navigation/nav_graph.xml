@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_plannerFragment_to_taskPlannerFragment"
             app:destination="@id/taskPlannerFragment" />
+        <action
+            android:id="@+id/action_plannerFragment_to_viewTaskFragment"
+            app:destination="@id/viewTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/createPlanFragment"
@@ -82,20 +85,6 @@
             app:argType="long" />
     </fragment>
     <fragment
-        android:id="@+id/viewTaskFragment"
-        android:name="com.goalmaster.task.view.viewtask.ViewTaskFragment"
-        android:label="ViewTaskFragment">
-        <argument
-            android:name="taskId"
-            app:argType="long" />
-        <action
-            android:id="@+id/action_viewTaskFragment_to_editTaskFragment"
-            app:destination="@id/editTaskFragment" />
-        <action
-            android:id="@+id/action_viewTaskFragment_to_taskPlannerFragment"
-            app:destination="@id/taskPlannerFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/editTaskFragment"
         android:name="com.goalmaster.task.view.edit.EditTaskFragment"
         android:label="fragment_edit_task"
@@ -111,4 +100,18 @@
         android:id="@+id/taskPlannerFragment"
         android:name="com.goalmaster.plan.view.addtask.TaskPlannerFragment"
         android:label="TaskPlannerFragment" />
+    <fragment
+        android:id="@+id/viewTaskFragment"
+        android:name="com.goalmaster.task.view.viewtask.ViewTaskFragment"
+        android:label="ViewTaskFragment" >
+        <action
+            android:id="@+id/action_viewTaskFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+        <argument
+            android:name="taskId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_viewTaskFragment_to_taskPlannerFragment"
+            app:destination="@id/taskPlannerFragment" />
+    </fragment>
 </navigation>

@@ -1,12 +1,18 @@
 package com.goalmaster.plan.view.planner
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.goalmaster.Result
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.entity.PlanState
+import com.goalmaster.plan.data.entity.PlanTask
 import com.goalmaster.plan.data.source.PlanRepository
+import com.goalmaster.task.TaskRepository
+import com.goalmaster.task.TaskState
+import com.goalmaster.task.data.entity.Task
+import com.goalmaster.task.data.entity.TaskWithData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -19,7 +25,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlannerViewModel @Inject constructor(
-    private val planRepository: PlanRepository
+    private val planRepository: PlanRepository,
+    private val taskRepository: TaskRepository
 ) : ViewModel() {
 
     @ExperimentalCoroutinesApi
@@ -28,6 +35,12 @@ class PlannerViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = null
     )
+
+    val plannedTask = planRepository.observeCurrentPlanTasks().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    ).asLiveData(viewModelScope.coroutineContext)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val noPlan = planFlow.transformLatest {
@@ -56,6 +69,14 @@ class PlannerViewModel @Inject constructor(
         val planId = plan.value?.id ?: return
         viewModelScope.launch {
             planRepository.updateState(planId, state)
+        }
+    }
+
+    fun deletePlannedTask(taskId: Long) {
+        val planId = plan.value?.id ?: return
+        viewModelScope.launch {
+            taskRepository.updateTaskState(taskId, TaskState.UNPLANNED)
+            planRepository.deletePlannedTask(planId, taskId)
         }
     }
 
