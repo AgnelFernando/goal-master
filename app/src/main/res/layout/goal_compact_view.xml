@@ -40,6 +40,7 @@
             android:fontFamily="sans-serif-light"
             android:textColor="?colorOnSecondary"
             android:textSize="14sp"
+            android:dateText="@{goal.dueDate}"
             app:layout_constraintStart_toStartOf="@+id/goalName"
             app:layout_constraintTop_toBottomOf="@+id/goalName"
             tools:text="1 minute ago" />

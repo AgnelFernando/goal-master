@@ -89,4 +89,13 @@
     <string name="task_planner_title">Plan Task</string>
     <string name="planned_task_delete_button">Planned task delete button</string>
     <string name="planned_task_view_button">Planned task view button</string>
+    <string name="complete_plan_dialog_title">Mark plan as Complete</string>
+    <string name="complete_plan_dialog_message">Do you want to mark the plan as Complete?</string>
+    <string name="plan_done_toast">Plan done</string>
+
+
+    <string-array name="goal_states_array">
+        <item>Opened</item>
+        <item>Completed</item>
+    </string-array>
 </resources>

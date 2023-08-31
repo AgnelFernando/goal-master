@@ -13,4 +13,13 @@
     <style name="DialogTheme.ButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/sandy_brown</item>
     </style>
+
+    <style name="GoalMaster.ActionBar.ViewGoal" parent="Theme.GoalMaster">
+        <item name="android:actionBarStyle">@style/ViewGoal.ActionBar</item>
+    </style>
+
+    <style name="ViewGoal.ActionBar" parent="@style/Widget.MaterialComponents.ActionBar.Primary">
+        <item name="android:background">@color/red</item>
+    </style>
+
 </resources>

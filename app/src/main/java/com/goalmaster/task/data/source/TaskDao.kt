@@ -1,4 +1,4 @@
-package com.goalmaster.task
+package com.goalmaster.task.data.source
 
 import androidx.room.Dao
 import androidx.room.Query
@@ -31,7 +31,4 @@ interface TaskDao : BaseDao<Task> {
     @Transaction
     @Query("SELECT * FROM Task WHERE state == 'UNPLANNED'")
     fun observeTasksForPlan(): Flow<List<TaskWithData>>
-
-    @Query("UPDATE PlanTask SET status='COMPLETED' WHERE taskId=:taskId")
-    suspend fun markPlanTaskCompletedByTaskId(taskId: Long)
 }

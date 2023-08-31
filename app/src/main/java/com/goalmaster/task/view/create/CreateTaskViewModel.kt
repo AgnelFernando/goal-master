@@ -5,7 +5,7 @@ import com.goalmaster.Result
 import com.goalmaster.goal.data.entity.Goal
 import com.goalmaster.goal.data.source.GoalRepository
 import com.goalmaster.task.data.entity.Task
-import com.goalmaster.task.TaskRepository
+import com.goalmaster.task.data.source.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest

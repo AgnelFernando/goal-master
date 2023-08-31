@@ -2,6 +2,7 @@ package com.goalmaster.goal.data.source
 
 import com.goalmaster.Result
 import com.goalmaster.goal.data.entity.Goal
+import com.goalmaster.goal.data.entity.GoalState
 import com.goalmaster.goal.view.create.CreateGoalRequest
 import com.goalmaster.task.data.entity.Task
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,8 +27,8 @@ class LocalGoalDataSource(
         }
     }
 
-    override fun observeActiveGoals(): Flow<List<Goal>> {
-        return goalDao.observeActiveGoals()
+    override fun observeActiveGoals(state: GoalState): Flow<List<Goal>> {
+        return goalDao.observeActiveGoals(state)
     }
 
     override suspend fun updateCompletedUnits(id: Long, completed: Int)
@@ -37,6 +38,7 @@ class LocalGoalDataSource(
             val newCompleted = goal.completedUnits + completed
             if (newCompleted >= goal.totalUnits) {
                 goal.completedUnits = goal.totalUnits
+                goal.state = GoalState.COMPLETED
             } else {
                 goal.completedUnits = newCompleted
             }
@@ -80,6 +82,8 @@ class LocalGoalDataSource(
 
     override suspend fun delete(id: Long): Result<Unit>  = withContext(ioDispatcher) {
         return@withContext try {
+            val taskCount = goalDao.getGoalTaskCount(id)
+            if (taskCount != 0) throw Exception("Goal isn't empty")
             goalDao.deleteById(id)
             Result.Success(Unit)
         } catch (exception: Exception) {

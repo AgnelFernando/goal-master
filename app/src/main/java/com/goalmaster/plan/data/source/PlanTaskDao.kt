@@ -18,4 +18,10 @@ interface PlanTaskDao : BaseDao<PlanTask> {
             "ON t.id=pt.taskId WHERE (p.state='CREATED' or " +
             "p.state='LOCKED') AND pt.status == 'OPENED'")
     fun observeCurrentPlanTasks(): Flow<List<TaskWithData>>
+
+    @Query("UPDATE PlanTask SET status='CANCELLED' WHERE planId=:planId")
+    suspend fun cancelPlannedTasksByPlanId(planId: Long)
+
+    @Query("UPDATE PlanTask SET status=:status WHERE taskId=:taskId")
+    suspend fun updatePlanTaskStatusByTaskId(taskId: Long, status: String)
 }

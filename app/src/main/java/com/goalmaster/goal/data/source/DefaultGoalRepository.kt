@@ -2,6 +2,7 @@ package com.goalmaster.goal.data.source
 
 import com.goalmaster.Result
 import com.goalmaster.goal.data.entity.Goal
+import com.goalmaster.goal.data.entity.GoalState
 import com.goalmaster.goal.view.create.CreateGoalRequest
 import com.goalmaster.task.data.entity.Task
 import kotlinx.coroutines.flow.Flow
@@ -20,8 +21,8 @@ class DefaultGoalRepository(
         }
     }
 
-    override fun observeActiveGoals(): Flow<List<Goal>> {
-        return dataSource.observeActiveGoals()
+    override fun observeActiveGoals(state: GoalState): Flow<List<Goal>> {
+        return dataSource.observeActiveGoals(state)
     }
 
     override suspend fun updateGoalProgress(id: Long, completed: Int): Result<Unit> {

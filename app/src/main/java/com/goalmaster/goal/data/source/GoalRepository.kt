@@ -2,6 +2,7 @@ package com.goalmaster.goal.data.source
 
 import com.goalmaster.Result
 import com.goalmaster.goal.data.entity.Goal
+import com.goalmaster.goal.data.entity.GoalState
 import com.goalmaster.goal.view.create.CreateGoalRequest
 import com.goalmaster.task.data.entity.Task
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,7 @@ interface GoalRepository {
 
     suspend fun createGoal(request: CreateGoalRequest): Result<Unit>
 
-    fun observeActiveGoals(): Flow<List<Goal>>
+    fun observeActiveGoals(state: GoalState): Flow<List<Goal>>
 
     suspend fun updateGoalProgress(id: Long, completed: Int): Result<Unit>
 

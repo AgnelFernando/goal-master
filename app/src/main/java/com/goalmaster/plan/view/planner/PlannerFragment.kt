@@ -8,18 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.goalmaster.R
 import com.goalmaster.databinding.FragmentPlannerBinding
 import com.goalmaster.plan.data.entity.PlanState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -44,7 +37,9 @@ class PlannerFragment : Fragment(), PlanTaskOptionImpl {
         mAdapter = PlanTaskTempAdapter(this)
         binding.planTasks.adapter = mAdapter
         binding.planTasks.isNestedScrollingEnabled = false
-//        binding.planTasks.setHasFixedSize(true)
+        viewModel.message.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
         observePlannedTasks()
         binding.vm = viewModel
         setupButtons()
@@ -76,6 +71,11 @@ class PlannerFragment : Fragment(), PlanTaskOptionImpl {
             }
         }
 
+        binding.planCompleteButton.setOnClickListener {
+            if (viewModel.plan.value == null && viewModel.plan.value!!.state != PlanState.LOCKED) return@setOnClickListener
+            openCompletePlanConfirmation()
+        }
+
         binding.addTaskButton.setOnClickListener {
             val action = PlannerFragmentDirections
                 .actionPlannerFragmentToTaskPlannerFragment()
@@ -96,6 +96,23 @@ class PlannerFragment : Fragment(), PlanTaskOptionImpl {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.plan_locked_toast), Toast.LENGTH_SHORT
+                ).show()
+            }
+            .setNegativeButton(R.string.cancel, null).show()
+    }
+
+    private fun openCompletePlanConfirmation() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.complete_plan_dialog_title))
+            .setMessage(getString(R.string.complete_plan_dialog_message))
+            .setIcon(R.drawable.baseline_check_24)
+            .setPositiveButton(
+                R.string.done_button_text
+            ) { _, _ ->
+                viewModel.updatePlanState(PlanState.COMPLETED)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.plan_done_toast), Toast.LENGTH_SHORT
                 ).show()
             }
             .setNegativeButton(R.string.cancel, null).show()

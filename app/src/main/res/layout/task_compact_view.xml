@@ -6,7 +6,7 @@
     <data>
 
         <import type="android.view.View" />
-        <import type="com.goalmaster.task.TaskState"/>
+        <import type="com.goalmaster.task.data.entity.TaskState"/>
 
         <variable
             name="showMoreDetails"

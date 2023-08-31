@@ -17,12 +17,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".goal.viewgoal.ViewGoalFragment">
+        tools:context=".goal.viewgoal.ViewGoalFragment"
+        android:theme="@style/GoalMaster.ActionBar.ViewGoal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/goal_details_layout"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="wrap_content"
+            android:minHeight="160dp"
             android:background="@drawable/rounded_bottom_corners"
             android:backgroundTint="#A0A6BE"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,7 +33,8 @@
                 android:id="@+id/goal_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_margin="8dp"
+                android:layout_marginTop="20dp"
                 android:text="@{vm.goal.name}"
                 android:textColor="@color/black"
                 android:textSize="25sp"
@@ -45,39 +48,41 @@
             <Button
                 android:id="@+id/view_goal_back_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="@string/view_goal_back_button_text"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/goal_name"
-                app:layout_constraintTop_toTopOf="@+id/goal_name"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/view_goal_edit_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="@null"
                 android:text="@string/edit_button_text"
                 android:textAllCaps="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/goal_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/goal_name" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/goal_created_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:text="@string/view_goal_created_title"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_goal_back_button" />
+                app:layout_constraintTop_toBottomOf="@+id/goal_name" />
 
             <TextView
                 android:id="@+id/goal_created"

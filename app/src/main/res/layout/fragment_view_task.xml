@@ -9,7 +9,7 @@
             name="vm"
             type="com.goalmaster.task.view.viewtask.ViewTaskViewModel" />
 
-        <import type="com.goalmaster.task.TaskState" />
+        <import type="com.goalmaster.task.data.entity.TaskState" />
 
         <import type="android.view.View"/>
     </data>
@@ -124,13 +124,15 @@
 
                 <TextView
                     android:id="@+id/taskDoD"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{vm.task.definitionOfDone}"
-                    android:textAllCaps="false"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/task_goal_name"
                     app:layout_constraintTop_toBottomOf="@id/taskDoDTitle"
                     tools:text="Complete till page 203" />

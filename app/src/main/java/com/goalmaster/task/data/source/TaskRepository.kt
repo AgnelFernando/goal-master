@@ -1,25 +1,23 @@
-package com.goalmaster.task
+package com.goalmaster.task.data.source
 
 import com.goalmaster.Result
 import com.goalmaster.task.data.entity.Task
+import com.goalmaster.task.data.entity.TaskState
 import com.goalmaster.task.data.entity.TaskWithData
 import kotlinx.coroutines.flow.Flow
 
-interface TaskDataSource {
+interface TaskRepository {
 
     suspend fun saveTask(task: Task): Result<Unit>
 
-    fun observeGoalTasks(goalId: Long): Flow<List<Task>>
-
-    suspend fun getTask(taskId: Long): Result<Task>
-
     fun observeTaskWithData(taskId: Long): Flow<TaskWithData?>
 
-    suspend fun getTaskWithData(taskId: Long): Result<TaskWithData>
+    suspend fun getTask(taskId: Long): Result<TaskWithData>
 
     suspend fun deleteTask(taskId: Long): Result<Unit>
 
     fun observeTasksForPlan(): Flow<List<TaskWithData>>
 
-    suspend fun updateTaskState(task: Task, state: TaskState): Result<Unit>
+    suspend fun updateTaskState(id: Long, state: TaskState): Result<Unit>
+
 }

@@ -8,8 +8,7 @@ import com.goalmaster.Result
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.entity.PlanTask
 import com.goalmaster.plan.data.source.PlanRepository
-import com.goalmaster.task.TaskRepository
-import com.goalmaster.task.TaskState
+import com.goalmaster.task.data.source.TaskRepository
 import com.goalmaster.task.data.entity.TaskWithData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskPlannerViewModel @Inject constructor(private val repository: TaskRepository,
                                                private val planRepository: PlanRepository,
-                                               private val taskRepository: TaskRepository) : ViewModel() {
+                                               private val taskRepository: TaskRepository
+) : ViewModel() {
 
     var taskId = 0L
 
@@ -98,7 +98,6 @@ class TaskPlannerViewModel @Inject constructor(private val repository: TaskRepos
         val data = planTask.value ?: return
         viewModelScope.launch {
             val result = planRepository.savePlanTask(data)
-            taskRepository.updateTaskState(data.taskId, TaskState.PLANNED)
             if (result is Result.Success) {
                 createPlanTaskEvent.value = Unit
             }

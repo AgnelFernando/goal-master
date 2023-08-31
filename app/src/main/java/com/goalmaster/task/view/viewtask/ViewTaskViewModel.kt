@@ -1,8 +1,8 @@
 package com.goalmaster.task.view.viewtask
 
 import androidx.lifecycle.*
-import com.goalmaster.task.TaskRepository
-import com.goalmaster.task.TaskState
+import com.goalmaster.task.data.source.TaskRepository
+import com.goalmaster.task.data.entity.TaskState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*

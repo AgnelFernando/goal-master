@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.goalmaster.databinding.FragmentViewTaskBinding
-import com.goalmaster.task.TaskState
+import com.goalmaster.task.data.entity.TaskState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

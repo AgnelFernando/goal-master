@@ -1,5 +1,7 @@
 package com.goalmaster.goal.view.viewgoal
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +46,11 @@ class ViewGoalFragment : Fragment(), GoalTasksCallbacks {
         viewModel.setUp(args.goalId)
         setupButton()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().actionBar?.setBackgroundDrawable(ColorDrawable(Color.RED))
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

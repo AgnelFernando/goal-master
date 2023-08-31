@@ -4,11 +4,14 @@ import com.goalmaster.Result
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.entity.PlanState
 import com.goalmaster.plan.data.entity.PlanTask
+import com.goalmaster.task.data.source.LocalTaskDataSource
+import com.goalmaster.task.data.entity.TaskState
 import com.goalmaster.task.data.entity.TaskWithData
 import kotlinx.coroutines.flow.Flow
 
 class DefaultPlanRepository(
-    private val dataSource: PlanDataSource
+    private val dataSource: PlanDataSource,
+    private val taskDataSource: LocalTaskDataSource
 ) : PlanRepository {
 
     override fun observeCurrentPlan(): Flow<Plan> {
@@ -31,7 +34,7 @@ class DefaultPlanRepository(
         }
     }
 
-    override suspend fun updateState(planId: Long, state: PlanState): Result<Unit> {
+    override suspend fun  updateState(planId: Long, state: PlanState): Result<Unit> {
         return try {
             dataSource.updateState(planId, state)
         } catch (e: Exception) {
@@ -42,6 +45,7 @@ class DefaultPlanRepository(
     override suspend fun savePlanTask(planTask: PlanTask): Result<Unit> {
         return try {
             dataSource.savePlanTask(planTask)
+            taskDataSource.updateTaskState(planTask.taskId, TaskState.PLANNED)
         } catch (e: Exception) {
             Result.Error(e)
         }

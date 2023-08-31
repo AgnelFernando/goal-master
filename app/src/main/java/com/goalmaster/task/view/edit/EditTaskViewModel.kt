@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.goalmaster.Result
-import com.goalmaster.task.TaskRepository
+import com.goalmaster.task.data.source.TaskRepository
 import com.goalmaster.task.data.entity.Task
 import com.goalmaster.task.data.entity.TaskWithData
 import dagger.hilt.android.lifecycle.HiltViewModel

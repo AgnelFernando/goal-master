@@ -1,23 +1,18 @@
 package com.goalmaster.plan.view.planner
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.goalmaster.Result
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.entity.PlanState
-import com.goalmaster.plan.data.entity.PlanTask
 import com.goalmaster.plan.data.source.PlanRepository
-import com.goalmaster.task.TaskRepository
-import com.goalmaster.task.TaskState
-import com.goalmaster.task.data.entity.Task
-import com.goalmaster.task.data.entity.TaskWithData
+import com.goalmaster.task.data.source.TaskRepository
+import com.goalmaster.task.data.entity.TaskState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -44,7 +39,7 @@ class PlannerViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val noPlan = planFlow.transformLatest {
-       emit(it === null)
+        emit(it === null)
     }.asLiveData(viewModelScope.coroutineContext)
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -60,13 +55,26 @@ class PlannerViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val dueDateIn = planFlow.transformLatest {
         if (it != null) {
-            val between = ChronoUnit.DAYS.between(LocalDateTime.now(), it.endDate)
+            val between = ChronoUnit.DAYS.between(LocalDateTime.now(), it.endDate) + 1
             emit("$between days left")
         }
     }.asLiveData(viewModelScope.coroutineContext)
 
+    val message = MutableLiveData<String>()
+
     fun updatePlanState(state: PlanState) {
         val planId = plan.value?.id ?: return
+        if ((state == PlanState.CANCELLED || state == PlanState.COMPLETED)
+            && !plannedTask.value.isNullOrEmpty()) {
+            message.value = "Plan is not empty"
+            return
+        }
+
+        if (state == PlanState.LOCKED && plannedTask.value.isNullOrEmpty()) {
+            message.value = "Plan should have at least 1 task"
+            return
+        }
+
         viewModelScope.launch {
             planRepository.updateState(planId, state)
         }

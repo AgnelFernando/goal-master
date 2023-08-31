@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,13 +20,14 @@ import com.goalmaster.databinding.UpdateProgressLayoutBinding
 import com.goalmaster.goal.GoalItemTouchHelper
 import com.goalmaster.goal.GoalListAdapter
 import com.goalmaster.goal.data.entity.GoalData
+import com.goalmaster.goal.data.entity.GoalState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class GoalListFragment : Fragment(), GoalOptionImpl {
+class GoalListFragment : Fragment(), GoalOptionImpl, AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentGoalListBinding
 
@@ -46,6 +49,19 @@ class GoalListFragment : Fragment(), GoalOptionImpl {
             val action = GoalListFragmentDirections.actionGoalListFragmentToCreateGoalFragment()
             findNavController().navigate(action)
         }
+
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.goal_states_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            binding.goalStateSpinner.adapter = adapter
+            binding.goalStateSpinner.onItemSelectedListener = this
+        }
+
         return binding.root
     }
 
@@ -78,10 +94,8 @@ class GoalListFragment : Fragment(), GoalOptionImpl {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeGoals() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.goalList.collectLatest {
-                mAdapter.submitList(it.map { g -> GoalData(g) })
-            }
+        viewModel.goalList.observe(viewLifecycleOwner) {
+            mAdapter.submitList(it.map { g -> GoalData(g) })
         }
     }
 
@@ -135,6 +149,16 @@ class GoalListFragment : Fragment(), GoalOptionImpl {
 
     override fun onDeleteClicked(id: Long) {
         TODO("Not yet implemented")
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        viewModel.viewModelScope.launch {
+            viewModel.selectedState.emit(if (id == 0L) GoalState.OPENED else GoalState.COMPLETED)
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
     }
 
 }

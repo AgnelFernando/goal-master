@@ -38,6 +38,22 @@
             tools:src="@drawable/baseline_lock_open_24"
             tools:visibility="visible" />
 
+        <ImageButton
+            android:id="@+id/plan_complete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="@color/gun_metal"
+            android:contentDescription="@string/task_view_back_button_cd"
+            android:elevation="8dp"
+            android:padding="15dp"
+            android:src="@drawable/baseline_check_24"
+            android:visibility="@{vm.plan.state == PlanState.LOCKED ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toStartOf="@id/plan_lock_button"
+            app:layout_constraintTop_toTopOf="@id/plan_lock_button"
+            tools:visibility="visible" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

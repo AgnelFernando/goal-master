@@ -9,7 +9,7 @@
             name="vm"
             type="com.goalmaster.plan.view.addtask.TaskPlannerViewModel" />
 
-        <import type="com.goalmaster.task.TaskState" />
+        <import type="com.goalmaster.task.data.entity.TaskState" />
 
         <import type="android.view.View"/>
     </data>

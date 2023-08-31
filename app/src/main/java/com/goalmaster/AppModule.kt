@@ -9,9 +9,9 @@ import com.goalmaster.goal.data.source.LocalGoalDataSource
 import com.goalmaster.plan.*
 import com.goalmaster.plan.data.source.*
 import com.goalmaster.task.DefaultTaskRepository
-import com.goalmaster.task.LocalTaskDataSource
-import com.goalmaster.task.TaskDao
-import com.goalmaster.task.TaskRepository
+import com.goalmaster.task.data.source.LocalTaskDataSource
+import com.goalmaster.task.data.source.TaskDao
+import com.goalmaster.task.data.source.TaskRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -61,25 +61,21 @@ object AppModule {
     @Singleton
     @Provides
     fun provideLocalTaskDataSource(taskDao: TaskDao,
+                                   planTaskDataSource: PlanTaskDataSource,
+                                   goalDataSource: LocalGoalDataSource,
                                    ioDispatcher: CoroutineDispatcher): LocalTaskDataSource {
-        return LocalTaskDataSource(taskDao, ioDispatcher)
+        return LocalTaskDataSource(taskDao, goalDataSource, planTaskDataSource, ioDispatcher)
     }
 
     @Singleton
     @Provides
-    fun provideTaskRepository(dataSource: LocalTaskDataSource,
-                              goalDataSource: LocalGoalDataSource): TaskRepository {
-        return DefaultTaskRepository(dataSource, goalDataSource)
+    fun provideTaskRepository(dataSource: LocalTaskDataSource): TaskRepository {
+        return DefaultTaskRepository(dataSource)
     }
 
     @Provides
     fun providePlanDao(appDatabase: AppDatabase): PlanDao {
         return appDatabase.planDao()
-    }
-
-    @Provides
-    fun providePlanTaskDao(appDatabase: AppDatabase): PlanTaskDao {
-        return appDatabase.planTaskDao()
     }
 
     @Singleton
@@ -92,7 +88,21 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providePlanRepository(dataSource: PlanDataSource): PlanRepository {
-        return DefaultPlanRepository(dataSource)
+    fun providePlanRepository(dataSource: PlanDataSource,
+                              taskDataSource: LocalTaskDataSource
+    ): PlanRepository {
+        return DefaultPlanRepository(dataSource, taskDataSource)
+    }
+
+    @Provides
+    fun providePlanTaskDao(appDatabase: AppDatabase): PlanTaskDao {
+        return appDatabase.planTaskDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideLocalPlanTaskDataSource(planTaskDao: PlanTaskDao,
+                                       ioDispatcher: CoroutineDispatcher): PlanTaskDataSource {
+        return LocalPlanTaskDataSource(planTaskDao, ioDispatcher)
     }
 }

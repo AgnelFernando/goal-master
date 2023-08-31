@@ -132,7 +132,6 @@ class GoalListAdapter(private val goalOptions: GoalOptionImpl) :
         fun bind(data: GoalData, goalOptions: GoalOptionImpl) {
             binding?.let {
                 it.goal = data
-                it.goalLastUpdated.text = data.updatedOn.relativeDateFormat(itemView.context)
                 val progress = (data.completedUnits.toDouble() / data.totalUnits.toDouble()) * 100
                 it.progressPercentage = progress.toInt()
                 it.root.setOnClickListener {

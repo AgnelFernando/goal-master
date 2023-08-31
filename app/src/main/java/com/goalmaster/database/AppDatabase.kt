@@ -11,7 +11,7 @@ import com.goalmaster.plan.data.source.PlanDao
 import com.goalmaster.plan.data.entity.PlanTask
 import com.goalmaster.plan.data.source.PlanTaskDao
 import com.goalmaster.task.data.entity.Task
-import com.goalmaster.task.TaskDao
+import com.goalmaster.task.data.source.TaskDao
 
 /**
  * The Room database for this app

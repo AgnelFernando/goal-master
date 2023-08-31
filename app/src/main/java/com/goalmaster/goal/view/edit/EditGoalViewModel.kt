@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.goalmaster.goal.data.entity.Goal
 import com.goalmaster.goal.data.source.GoalRepository
 import com.goalmaster.Result
+import com.goalmaster.goal.data.entity.GoalState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -72,6 +73,7 @@ class EditGoalViewModel @Inject constructor(private val repository: GoalReposito
         goal.definitionOfDone = dod.value!!
         goal.dueDate = dueDate.value!!
         goal.description = description.value
+        if (goal.completedUnits >= goal.totalUnits) goal.state = GoalState.COMPLETED
 
         viewModelScope.launch {
             val result = repository.saveGoal(goal)
