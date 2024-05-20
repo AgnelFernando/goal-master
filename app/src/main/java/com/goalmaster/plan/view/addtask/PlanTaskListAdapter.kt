@@ -58,7 +58,7 @@ class PlanTaskListAdapter : ListAdapter<TaskWithData, RecyclerView.ViewHolder>(T
     }
 
     fun getSelectedTask(): Long {
-        return getItemId(selectedPos)
+        return getItem(selectedPos).task.id
     }
 
 

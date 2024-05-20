@@ -10,6 +10,7 @@
         android:name="com.goalmaster.goal.view.create.CreateGoalFragment"
         android:label="CreateGoalFragment"
         tools:layout="@layout/fragment_create_goal" />
+
     <fragment
         android:id="@+id/goalListFragment"
         android:name="com.goalmaster.goal.view.goallist.GoalListFragment"
@@ -27,7 +28,11 @@
         <action
             android:id="@+id/action_goalListFragment_to_viewGoalFragment"
             app:destination="@id/viewGoalFragment" />
+        <action
+            android:id="@+id/action_goalListFragment_to_analyticsFragment"
+            app:destination="@id/analyticsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/editGoalFragment"
         android:name="com.goalmaster.goal.view.edit.EditGoalFragment"
@@ -37,10 +42,12 @@
             android:name="goalId"
             app:argType="long" />
     </fragment>
+
     <fragment
         android:id="@+id/plannerFragment"
         android:name="com.goalmaster.plan.view.planner.PlannerFragment"
-        android:label="HomeFragment">
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_planner">
         <action
             android:id="@+id/action_plannerFragment_to_goalListFragment"
             app:destination="@id/goalListFragment" />
@@ -53,7 +60,14 @@
         <action
             android:id="@+id/action_plannerFragment_to_viewTaskFragment"
             app:destination="@id/viewTaskFragment" />
+        <action
+            android:id="@+id/action_plannerFragment_to_reviewAndPlanFragment"
+            app:destination="@id/reviewAndPlanFragment" />
+        <action
+            android:id="@+id/action_plannerFragment_to_analyticsFragment"
+            app:destination="@id/analyticsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/createPlanFragment"
         android:name="com.goalmaster.plan.view.create.CreatePlanFragment"
@@ -100,6 +114,7 @@
         android:id="@+id/taskPlannerFragment"
         android:name="com.goalmaster.plan.view.addtask.TaskPlannerFragment"
         android:label="TaskPlannerFragment" />
+
     <fragment
         android:id="@+id/viewTaskFragment"
         android:name="com.goalmaster.task.view.viewtask.ViewTaskFragment"
@@ -113,5 +128,41 @@
         <action
             android:id="@+id/action_viewTaskFragment_to_taskPlannerFragment"
             app:destination="@id/taskPlannerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reviewAndPlanFragment"
+        android:name="com.goalmaster.review.ReviewAndPlanFragment"
+        android:label="ReviewAndPlanFragment" >
+        <action
+            android:id="@+id/action_reviewAndPlanFragment_to_reviewTaskFragment"
+            app:destination="@id/reviewTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewTaskFragment"
+        android:name="com.goalmaster.review.ReviewTaskFragment"
+        android:label="ReviewTaskFragment" >
+        <action
+            android:id="@+id/action_reviewTaskFragment_to_planTodayTaskFragment"
+            app:destination="@id/planTodayTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/planTodayTaskFragment"
+        android:name="com.goalmaster.review.PlanTodayTaskFragment"
+        android:label="PlanTodayTaskFragment" >
+        <action
+            android:id="@+id/action_planTodayTaskFragment_to_plannerFragment"
+            app:destination="@id/plannerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/analyticsFragment"
+        android:name="com.goalmaster.analytics.AnalyticsFragment"
+        android:label="AnalyticsFragment" >
+        <action
+            android:id="@+id/action_analyticsFragment_to_plannerFragment"
+            app:destination="@id/plannerFragment" />
+        <action
+            android:id="@+id/action_analyticsFragment_to_goalListFragment"
+            app:destination="@id/goalListFragment" />
     </fragment>
 </navigation>

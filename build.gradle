@@ -6,7 +6,7 @@ buildscript {
 
         compileSdkVersion = 33
         targetSdkVersion = 33
-        minimumSdkVersion = 26
+        minimumSdkVersion = 31
 
         androidCoreVersion = "1.10.1"
         appCompatVersion = "1.6.1"
@@ -43,9 +43,10 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"

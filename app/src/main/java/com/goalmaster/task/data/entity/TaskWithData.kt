@@ -21,4 +21,11 @@ data class TaskWithData(
         entityColumn = "taskId"
     )
     val planTask: PlanTask?,
+
+    @Relation(
+        parentColumn = "id",
+        entity = TaskTimeTracker::class,
+        entityColumn = "taskId"
+    )
+    val timeTracked: List<TaskTimeTracker>
 )

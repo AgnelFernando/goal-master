@@ -45,21 +45,22 @@
             app:layout_constraintTop_toBottomOf="@+id/goalName"
             tools:text="1 minute ago" />
 
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            style="@style/GoalProgressBar"
+        <com.goalmaster.utils.DoublerProgressBar
             android:id="@+id/goalProgress"
+            style="@style/GoalProgressBar"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="25dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:progress="@{progressPercentage}"
             app:layout_constraintEnd_toStartOf="@+id/progressValue"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goalLastUpdated"
-            tools:progress="20" />
+            tools:progress="20"
+            tools:secondaryProgress="40"
+            android:progressDrawable="@drawable/double_progress_bar" />
 
         <TextView
             style="@style/GoalProgressBarValue"

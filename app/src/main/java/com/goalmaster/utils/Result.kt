@@ -1,5 +1,5 @@
 
-package com.goalmaster
+package com.goalmaster.utils
 
 
 /**

@@ -1,9 +1,10 @@
 package com.goalmaster.plan.data.source
 
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.entity.PlanState
 import com.goalmaster.plan.data.entity.PlanTask
+import com.goalmaster.plan.data.entity.PlanTaskStatus
 import com.goalmaster.task.data.entity.TaskWithData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +31,11 @@ class LocalPlanDataSource(
 
     override suspend fun updateState(planId: Long, state: PlanState): Result<Unit> = withContext(ioDispatcher) {
         return@withContext try {
+            if (state == PlanState.COMPLETED) {
+                planTaskDao.updateTaskStatus(planId)
+                planTaskDao.cancelPlannedTasksByPlanId(planId)
+
+            }
             val plan = planDao.findById(planId) ?: throw Exception("Not found")
             plan.state = state
             planDao.insert(plan)
@@ -66,7 +72,11 @@ class LocalPlanDataSource(
         }
     }
 
-    override fun observeCurrentPlanTasks(): Flow<List<TaskWithData>> {
-        return planTaskDao.observeCurrentPlanTasks()
+    override fun observeCurrentPlanTasks(ptStatus: PlanTaskStatus): Flow<List<TaskWithData>> {
+        return planTaskDao.observeCurrentPlanTasks(ptStatus)
+    }
+
+    override fun observeCurrentPlanAllTasks(): Flow<List<TaskWithData>> {
+        return planTaskDao.observeCurrentPlanAllTasks()
     }
 }

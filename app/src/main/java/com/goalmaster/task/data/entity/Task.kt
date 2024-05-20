@@ -11,7 +11,7 @@ data class Task(@PrimaryKey(autoGenerate = true) val id : Long = 0L,
                 var name : String,
                 var definitionOfDone: String,
                 var unitSize: Int,
-                var state: TaskState = TaskState.UNPLANNED,
+                var state: TaskState = TaskState.CREATED,
 
                 @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
                 val created: Date = Date(),

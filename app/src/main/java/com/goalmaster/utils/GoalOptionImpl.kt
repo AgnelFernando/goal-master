@@ -1,4 +1,4 @@
-package com.goalmaster
+package com.goalmaster.utils
 
 interface GoalOptionImpl {
     fun onEditClicked(id: Long)

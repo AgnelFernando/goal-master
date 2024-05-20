@@ -1,17 +1,22 @@
 package com.goalmaster.goal.data.source
 
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.goal.data.entity.Goal
 import com.goalmaster.goal.data.entity.GoalState
+import com.goalmaster.goal.data.entity.GoalWithTaskCount
 import com.goalmaster.goal.view.create.CreateGoalRequest
 import com.goalmaster.task.data.entity.Task
+import com.goalmaster.todo.data.entity.Todo
+import com.goalmaster.todo.data.source.TodoDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.util.Date
 
 class LocalGoalDataSource(
-    private val goalDao: GoalDao, private val ioDispatcher: CoroutineDispatcher
+    private val goalDao: GoalDao,
+    private val todoDao: TodoDao,
+    private val ioDispatcher: CoroutineDispatcher
     ): GoalDataSource {
 
     override suspend fun createGoal(request: CreateGoalRequest)
@@ -27,7 +32,7 @@ class LocalGoalDataSource(
         }
     }
 
-    override fun observeActiveGoals(state: GoalState): Flow<List<Goal>> {
+    override fun observeActiveGoals(state: GoalState): Flow<List<GoalWithTaskCount>> {
         return goalDao.observeActiveGoals(state)
     }
 
@@ -80,7 +85,7 @@ class LocalGoalDataSource(
         }
     }
 
-    override suspend fun delete(id: Long): Result<Unit>  = withContext(ioDispatcher) {
+    override suspend fun delete(id: Long): Result<Unit> = withContext(ioDispatcher) {
         return@withContext try {
             val taskCount = goalDao.getGoalTaskCount(id)
             if (taskCount != 0) throw Exception("Goal isn't empty")
@@ -89,5 +94,18 @@ class LocalGoalDataSource(
         } catch (exception: Exception) {
             Result.Error(exception)
         }
+    }
+
+    override suspend fun saveTodo(todo: Todo): Result<Unit> = withContext(ioDispatcher) {
+        return@withContext try {
+            todoDao.insert(todo)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override fun observeGoalTodos(goalId: Long): Flow<List<Todo>> {
+        return goalDao.observeGoalTodos(goalId)
     }
 }

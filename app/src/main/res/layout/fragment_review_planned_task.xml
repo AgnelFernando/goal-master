@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.goalmaster.review.ReviewTaskViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/reviewTasksAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/reviewTasksToolbar"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                app:navigationIcon="@drawable/ic_detail_back_no_circle"
+                app:title="Review Tasks">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reviewTasksNextButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:text="@string/next_button_text" />
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/planned_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/reviewTasksAppbar"
+            tools:itemCount="5"
+            tools:listitem="@layout/planned_task_review" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

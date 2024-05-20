@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.task.data.source.TaskRepository
 import com.goalmaster.task.data.entity.Task
+import com.goalmaster.task.data.entity.TaskState
 import com.goalmaster.task.data.entity.TaskWithData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -79,6 +80,11 @@ class EditTaskViewModel @Inject constructor(private val repository: TaskReposito
         currentTask.durationInMin = duration.value?.inWholeMinutes?.toInt()
         currentTask.description = description.value
 
+        if (currentTask.durationInMin == null && currentTask.state == TaskState.PLANNED) {
+            return
+        } else if (currentTask.durationInMin == null) {
+            currentTask.state = TaskState.CREATED
+        }
         viewModelScope.launch {
             val result = repository.saveTask(currentTask)
             if (result is Result.Success) {
@@ -95,6 +101,19 @@ class EditTaskViewModel @Inject constructor(private val repository: TaskReposito
             val result = repository.deleteTask(currentTask.id)
             if (result is Result.Success) {
                 deleteTaskEvent.value = Unit
+            }
+            _dataLoading.value = false
+        }
+    }
+
+    fun clearDuration() {
+        currentTask.durationInMin = null
+        currentTask.state = TaskState.CREATED
+
+        viewModelScope.launch {
+            val result = repository.saveTask(currentTask)
+            if (result is Result.Success) {
+                saveTaskEvent.value = Unit
             }
             _dataLoading.value = false
         }

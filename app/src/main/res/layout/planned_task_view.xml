@@ -21,7 +21,20 @@
             name="showOption"
             type="Boolean" />
 
+        <variable
+            name="nowWorking"
+            type="Boolean" />
+
+        <variable
+            name="totalTimeWorked"
+            type="String" />
+
+        <variable
+            name="status"
+            type="com.goalmaster.plan.data.entity.PlanTaskStatus" />
+
         <import type="android.view.View" />
+        <import type="com.goalmaster.plan.data.entity.PlanTaskStatus" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,12 +62,32 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="3h" />
 
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:visibility="@{nowWorking ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:indeterminate="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/task_worked_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{totalTimeWorked}"
+                android:textStyle="bold"
+                android:textColor="@color/emerald"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="3h" />
+
             <TextView
                 android:id="@+id/task_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@{taskName}"
+                android:foreground="@{status != PlanTaskStatus.OPENED ? @drawable/strike_through : null}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +120,21 @@
             android:paddingBottom="5dp"
             android:visibility="@{showOption ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/taskDetails"
-            tools:visibility="gone">
+            tools:visibility="visible">
+
+            <ImageButton
+                android:id="@+id/doneButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/baseline_check_24"
+                android:backgroundTint="@color/emerald"
+                android:contentDescription="@string/planned_task_view_button"
+                android:visibility="@{status == PlanTaskStatus.OPENED ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/viewButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
             <ImageButton
                 android:id="@+id/viewButton"
@@ -97,10 +144,9 @@
                 android:backgroundTint="@color/emerald"
                 android:contentDescription="@string/planned_task_view_button"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+                app:layout_constraintEnd_toStartOf="@+id/addEventButton"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/doneButton" />
 
             <ImageButton
                 android:id="@+id/deleteButton"
@@ -109,8 +155,22 @@
                 android:background="@drawable/ic_baseline_delete_24"
                 android:backgroundTint="@color/tuscan_red"
                 android:contentDescription="@string/planned_task_delete_button"
+                android:visibility="@{status == PlanTaskStatus.OPENED ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/addEventButton" />
+
+            <ImageButton
+                android:id="@+id/addEventButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/baseline_event_24"
+                android:backgroundTint="@color/tuscan_red"
+                android:contentDescription="@string/planned_task_delete_button"
+                android:visibility="@{status == PlanTaskStatus.OPENED ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/deleteButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/viewButton" />
 

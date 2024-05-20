@@ -1,7 +1,7 @@
-package com.goalmaster
+package com.goalmaster.utils
 
-import android.content.Context
-import android.text.format.DateUtils
+import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -52,11 +52,29 @@ fun bindDateText(view: TextView, data: Date?) {
     }
 }
 
+@SuppressLint("SetTextI18n")
+@BindingAdapter("android:dateText")
+fun bindDateText(view: TextView, data: LocalDateTime?) {
+    data?.let { it ->
+        view.text = "${it.dayOfMonth}th ${it.month.toString().lowercase()
+            .replaceFirstChar { it.titlecase(Locale.getDefault()) }}"
+    }
+}
+
 @BindingAdapter("show")
 fun bindShow(mediaView: View, show: Boolean) {
     mediaView.visibility = if (show) {
         View.VISIBLE
     } else {
         View.GONE
+    }
+}
+
+@BindingAdapter("app:completedTodo")
+fun setStyle(textView: TextView, enabled: Boolean) {
+    if (enabled) {
+        textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    } else {
+        textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
     }
 }

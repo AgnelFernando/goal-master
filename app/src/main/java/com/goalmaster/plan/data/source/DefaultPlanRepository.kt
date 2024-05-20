@@ -1,9 +1,10 @@
 package com.goalmaster.plan.data.source
 
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.entity.PlanState
 import com.goalmaster.plan.data.entity.PlanTask
+import com.goalmaster.plan.data.entity.PlanTaskStatus
 import com.goalmaster.task.data.source.LocalTaskDataSource
 import com.goalmaster.task.data.entity.TaskState
 import com.goalmaster.task.data.entity.TaskWithData
@@ -59,7 +60,12 @@ class DefaultPlanRepository(
         }
     }
 
-    override fun observeCurrentPlanTasks(): Flow<List<TaskWithData>> {
-        return dataSource.observeCurrentPlanTasks()
+    override fun observeCurrentPlanTasks(ptStatus: PlanTaskStatus): Flow<List<TaskWithData>> {
+
+        return dataSource.observeCurrentPlanTasks(ptStatus)
+    }
+
+    override fun observeCurrentPlanAllTasks(): Flow<List<TaskWithData>> {
+        return dataSource.observeCurrentPlanAllTasks()
     }
 }

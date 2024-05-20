@@ -16,7 +16,7 @@ data class Goal(@PrimaryKey(autoGenerate = true) val id : Long = 0L,
                 @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
                 var dueDate: Date,
 
-                var state: GoalState = GoalState.OPENED,
+                var state: GoalState = GoalState.ACTIVE,
 
                 @ColumnInfo(defaultValue = "0")
                 var completedUnits: Int = 0,

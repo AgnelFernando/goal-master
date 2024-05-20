@@ -16,7 +16,7 @@ class GoalListViewModel @Inject constructor(
     private val goalRepository: GoalRepository
 ): ViewModel() {
 
-    val selectedState = MutableStateFlow(GoalState.OPENED)
+    val selectedState = MutableStateFlow(GoalState.ACTIVE)
 
     @ExperimentalCoroutinesApi
     val goalList = selectedState.flatMapLatest {

@@ -13,7 +13,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.goalmaster.GoalOptionImpl
+import com.goalmaster.utils.GoalOptionImpl
 import com.goalmaster.R
 import com.goalmaster.databinding.FragmentGoalListBinding
 import com.goalmaster.databinding.UpdateProgressLayoutBinding
@@ -109,6 +109,18 @@ class GoalListFragment : Fragment(), GoalOptionImpl, AdapterView.OnItemSelectedL
                     findNavController().navigate(action)
                     true
                 }
+                R.id.navigationAnalytics -> {
+                    val action = GoalListFragmentDirections
+                        .actionGoalListFragmentToAnalyticsFragment()
+                    findNavController().navigate(action)
+                    true
+                }
+//                R.id.navigationSettings -> {
+//                    val action = GoalListFragmentDirections
+//                        .actionGoalListFragmentToSettingFragment()
+//                    findNavController().navigate(action)
+//                    true
+//                }
                 else -> false
             }
         }
@@ -153,7 +165,11 @@ class GoalListFragment : Fragment(), GoalOptionImpl, AdapterView.OnItemSelectedL
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         viewModel.viewModelScope.launch {
-            viewModel.selectedState.emit(if (id == 0L) GoalState.OPENED else GoalState.COMPLETED)
+            viewModel.selectedState.emit(when (id) {
+                0L -> GoalState.ACTIVE
+                1L -> GoalState.ARCHIVED
+                else -> GoalState.COMPLETED
+            })
         }
     }
 

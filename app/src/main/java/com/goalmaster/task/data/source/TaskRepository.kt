@@ -1,8 +1,9 @@
 package com.goalmaster.task.data.source
 
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.task.data.entity.Task
 import com.goalmaster.task.data.entity.TaskState
+import com.goalmaster.task.data.entity.TaskTimeTracker
 import com.goalmaster.task.data.entity.TaskWithData
 import kotlinx.coroutines.flow.Flow
 
@@ -20,4 +21,8 @@ interface TaskRepository {
 
     suspend fun updateTaskState(id: Long, state: TaskState): Result<Unit>
 
+    fun observeRunningTaskTimeTracker(): Flow<TaskTimeTracker?>
+
+    suspend fun saveTimeTracker(ttt: TaskTimeTracker): Result<Unit>
+    
 }

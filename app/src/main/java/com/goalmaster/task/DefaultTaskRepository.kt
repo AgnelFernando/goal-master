@@ -1,8 +1,9 @@
 package com.goalmaster.task
 
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.task.data.entity.Task
 import com.goalmaster.task.data.entity.TaskState
+import com.goalmaster.task.data.entity.TaskTimeTracker
 import com.goalmaster.task.data.entity.TaskWithData
 import com.goalmaster.task.data.source.LocalTaskDataSource
 import com.goalmaster.task.data.source.TaskRepository
@@ -48,6 +49,19 @@ class DefaultTaskRepository(
     override suspend fun updateTaskState(id: Long, state: TaskState): Result<Unit> {
         return try {
             dataSource.updateTaskState(id, state)
+            Result.Success(Unit)
+        } catch (ex: Exception) {
+            Result.Error(ex)
+        }
+    }
+
+    override fun observeRunningTaskTimeTracker(): Flow<TaskTimeTracker?> {
+        return dataSource.observeRunningTaskTimeTracker()
+    }
+
+    override suspend fun saveTimeTracker(ttt: TaskTimeTracker): Result<Unit> {
+        return try {
+            dataSource.saveTaskTimeTracker(ttt)
             Result.Success(Unit)
         } catch (ex: Exception) {
             Result.Error(ex)

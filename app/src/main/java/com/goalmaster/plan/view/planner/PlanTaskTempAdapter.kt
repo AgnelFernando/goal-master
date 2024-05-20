@@ -4,33 +4,17 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.goalmaster.utils.TASK_COMPARATOR
 import com.goalmaster.databinding.PlannedTaskViewBinding
 import com.goalmaster.task.data.entity.TaskWithData
+import java.time.Duration
+import java.time.LocalDateTime
 import kotlin.time.Duration.Companion.minutes
 
 class PlanTaskTempAdapter(private val plannedTaskOptions: PlanTaskOptionImpl) :
     ListAdapter<TaskWithData, RecyclerView.ViewHolder>(TASK_COMPARATOR) {
-
-    companion object {
-        val TASK_COMPARATOR = object : DiffUtil.ItemCallback<TaskWithData>() {
-            override fun areContentsTheSame(
-                oldItem: TaskWithData,
-                newItem: TaskWithData
-            ): Boolean {
-                if (newItem.planTask == null || oldItem.planTask == null) return false
-                return oldItem.planTask.taskId == newItem.planTask.taskId
-                        && oldItem.planTask.planId == newItem.planTask.planId
-            }
-
-            override fun areItemsTheSame(
-                oldItem: TaskWithData,
-                newItem: TaskWithData
-            ): Boolean = oldItem == newItem
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = PlannedTaskViewBinding
@@ -65,17 +49,41 @@ class PlanTaskTempAdapter(private val plannedTaskOptions: PlanTaskOptionImpl) :
         @SuppressLint("SetTextI18n")
         fun bind(data: TaskWithData, options: PlanTaskOptionImpl) {
             binding?.let {
-                it.taskName = data.task.name
+                val task = data.task
+                val id = task.id
+
+                it.taskName = task.name
                 it.goalName = data.goal.name
-                it.eventTime = data.task.durationInMin?.minutes.toString()
+                it.eventTime = task.durationInMin?.minutes.toString()
                 it.showOption = false
+                it.status = data.planTask!!.status
+
+                val totalTimeWorked = data.timeTracked.sumOf { ttt ->
+                    val endTime = ttt.endTime ?: LocalDateTime.now()
+                    Duration.between(ttt.startTime, endTime).toMinutes()
+                }
+
+                it.nowWorking = data.timeTracked.any { ttt -> ttt.endTime == null }
+
+                it.totalTimeWorked = totalTimeWorked.minutes.toString()
+
+
                 it.deleteButton.setOnClickListener {
-                    options.onDeleteClicked(data.task.id)
+                    options.onDeleteClicked(id)
                 }
 
                 it.viewButton.setOnClickListener {
-                    options.onViewClicked(data.task.id)
+                    options.onViewClicked(id)
                 }
+
+                it.addEventButton.setOnClickListener {
+                    options.onAddEventClicked(id)
+                }
+
+                it.doneButton.setOnClickListener {
+                    options.onDoneClicked(id)
+                }
+
                 itemView.invalidate()
             }
         }

@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.goalmaster.R
 import com.goalmaster.databinding.FragmentEditTaskBinding
-import com.goalmaster.observeOnce
+import com.goalmaster.utils.observeOnce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
@@ -60,6 +60,10 @@ class EditTaskFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
 
         binding.editTaskSaveButton.setOnClickListener {
             viewModel.saveTask()
+        }
+
+        binding.durationClearButton.setOnClickListener {
+            viewModel.clearDuration()
         }
 
         binding.editTaskDeleteButton.setOnClickListener {

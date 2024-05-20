@@ -1,12 +1,16 @@
 package com.goalmaster
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import com.goalmaster.review.ReviewAndPlanFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -15,9 +19,28 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        createNotificationsChannels()
+
+        if (intent.action == "ACTION_VIEW_REVIEW") {
+            supportFragmentManager.beginTransaction()
+                .add(android.R.id.content, ReviewAndPlanFragment()).commit();
+        }
+    }
+
+    private fun createNotificationsChannels() {
+        ContextCompat.getSystemService(this, NotificationManager::class.java)
+            ?.deleteNotificationChannel("gm_test")
+        val channel = NotificationChannel(
+            getString(R.string.reminders_notification_channel_id),
+            getString(R.string.reminders_notification_channel_name),
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        ContextCompat.getSystemService(this, NotificationManager::class.java)
+            ?.createNotificationChannel(channel)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -52,12 +52,29 @@ class CreatePlanFragment : Fragment() {
         }
 
         viewModel.createPlanEvent.observe(viewLifecycleOwner) {
+            createNotifications()
             findNavController().navigateUp()
         }
 
         binding.createPlanSaveButton.setOnClickListener {
             viewModel.createPlan()
         }
+    }
+
+    private fun createNotifications() {
+        var date = LocalDateTime.of(viewModel.startDate.value!!.toLocalDate(),
+            LocalTime.of(23,0))
+        val endDate = viewModel.endDate.value!!
+        var id = viewModel.plan.id.toInt()
+//        while (endDate.isAfter(date)) {
+//            id += 1
+//            val notificationData = NotificationData(id,
+//                "Plan & Review",
+//                "Let's Review today's task and reviews tomorrow",
+//                date)
+//            RemindersManager.startReminder(this.requireContext(), notificationData)
+//            date = date.plusDays(1)
+//        }
     }
 
     private fun setupPickers() {

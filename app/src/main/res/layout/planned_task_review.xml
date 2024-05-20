@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="taskName"
+            type="String" />
+
+        <variable
+            name="goalName"
+            type="String" />
+
+        <variable
+            name="eventTime"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/planned_tasks_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/box_elevation"
+        android:elevation="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/taskDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/task_plan_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{eventTime}"
+                android:textColor="@color/cadet_gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="3h" />
+
+            <TextView
+                android:id="@+id/task_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{taskName}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/task_plan_time"
+                tools:text="Complete 10 pages" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/oval_background_1"
+                android:backgroundTint="@color/honey_dew"
+                android:paddingStart="20dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
+                android:text="@{goalName}"
+                android:textColor="@color/gun_metal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/task_name_text"
+                tools:text="goal" />
+
+            <ImageButton
+                android:id="@+id/doneButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/baseline_check_24"
+                android:backgroundTint="@color/emerald"
+                android:contentDescription="@string/planned_task_view_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/moveButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/baseline_keyboard_double_arrow_right_24"
+                android:backgroundTint="@color/emerald"
+                android:contentDescription="@string/planned_task_view_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

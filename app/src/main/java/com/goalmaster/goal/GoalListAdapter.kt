@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.goalmaster.GoalOptionImpl
+import com.goalmaster.utils.GoalOptionImpl
 import com.goalmaster.R
 import com.goalmaster.databinding.GoalCompactViewBinding
 import com.goalmaster.goal.data.entity.GoalData
-import com.goalmaster.relativeDateFormat
+import com.goalmaster.utils.DoublerProgressBar
 
 
 class GoalListAdapter(private val goalOptions: GoalOptionImpl) :
@@ -126,6 +126,7 @@ class GoalListAdapter(private val goalOptions: GoalOptionImpl) :
 
         constructor(binding: GoalCompactViewBinding) : this(binding.root) {
             this.binding = binding
+            binding.goalProgress.max = 100
         }
 
         @SuppressLint("SetTextI18n")
@@ -134,6 +135,11 @@ class GoalListAdapter(private val goalOptions: GoalOptionImpl) :
                 it.goal = data
                 val progress = (data.completedUnits.toDouble() / data.totalUnits.toDouble()) * 100
                 it.progressPercentage = progress.toInt()
+
+                val goalProgress = it.goalProgress as DoublerProgressBar
+                goalProgress.max = data.totalUnits
+                goalProgress.progress = data.completedUnits
+                goalProgress.secondaryProgress = data.completedUnits + data.taskCount
                 it.root.setOnClickListener {
                     goalOptions.openUpdateProgressDialog(data.id)
                 }

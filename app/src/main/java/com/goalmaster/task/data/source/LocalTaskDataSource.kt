@@ -1,14 +1,13 @@
 package com.goalmaster.task.data.source
 
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.goal.data.source.LocalGoalDataSource
 import com.goalmaster.plan.data.entity.PlanTaskStatus
 import com.goalmaster.plan.data.source.PlanTaskDataSource
 import com.goalmaster.task.data.entity.Task
 import com.goalmaster.task.data.entity.TaskState
+import com.goalmaster.task.data.entity.TaskTimeTracker
 import com.goalmaster.task.data.entity.TaskWithData
-import com.goalmaster.task.data.source.TaskDao
-import com.goalmaster.task.data.source.TaskDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -67,7 +66,6 @@ class LocalTaskDataSource(
                 unPlanTask(task)
                 task.state = TaskState.UNPLANNED
             }
-            if (task.state != TaskState.UNPLANNED) throw Exception("Illegal state")
             taskDao.deleteById(taskId)
             Result.Success(Unit)
         } catch (exception: Exception) {
@@ -84,7 +82,7 @@ class LocalTaskDataSource(
             val task = taskDao.findById(id) ?: throw Exception("Task not found")
             when (state) {
                 TaskState.DONE -> doneTask(task)
-                TaskState.PLANNED -> {}
+                TaskState.PLANNED, TaskState.CREATED -> {}
                 TaskState.UNPLANNED -> unPlanTask(task)
             }
             task.state = state
@@ -104,5 +102,18 @@ class LocalTaskDataSource(
         planTaskDataSource.updateStatusByTaskId(task.id,PlanTaskStatus.COMPLETED)
         goalDataSource.updateCompletedUnits(task.goalId, task.unitSize)
         return Result.Success(Unit)
+    }
+
+    override fun observeRunningTaskTimeTracker(): Flow<TaskTimeTracker?> {
+        return taskDao.observeRunningTaskTimeTracker()
+    }
+
+    override suspend fun saveTaskTimeTracker(ttt: TaskTimeTracker): Result<Unit> = withContext(ioDispatcher) {
+        return@withContext try {
+            taskDao.insertTaskTimeTracker(ttt)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
     }
 }

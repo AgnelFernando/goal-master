@@ -64,7 +64,8 @@
     <string name="view_task_dod_title">DoD</string>
     <string name="view_task_description_title">Description</string>
     <string name="event_duration_title">Event duration</string>
-    <string name="event_time_title">Event time</string>
+    <string name="event_time_title">Planned on</string>
+    <string name="all_string">All</string>
     <string name="edit_Task_title">Edit Task</string>
     <string name="delete_button_text">Delete</string>
     <string name="create_plan_title">Create Plan</string>
@@ -92,10 +93,49 @@
     <string name="complete_plan_dialog_title">Mark plan as Complete</string>
     <string name="complete_plan_dialog_message">Do you want to mark the plan as Complete?</string>
     <string name="plan_done_toast">Plan done</string>
+    <string name="task_planned_on_title">Task date</string>
+    <string name="review_and_plan_image_cd">Review and Plan</string>
+    <string name="review_and_plan_text"><![CDATA[Let\'s Review\n & Plan]]></string>
+    <string name="start">Start</string>
+    <string name="exit_review_and_plan_button_cd">Exit review and plan page</string>
+    <string name="next_button_text">Next</string>
+    <string name="review_and_plan_banner_text">Review and Plan</string>
+    <string name="reminders_notification_channel_id">gm_general</string>
+    <string name="title_notification_reminder">Goal Master</string>
+    <string name="description_notification_reminder">Let\'s Review and </string>
+    <string name="reminders_notification_channel_name">Goal Master</string>
+    <string name="archive_button_text">Archive</string>
+    <string name="unarchive_button_text">Unarchive</string>
+    <string name="bottom_navigation_analytics_label">Analytics</string>
+    <string name="select_task">Select Task</string>
+    <string name="copy_button">Copy Button</string>
+    <string name="bottom_navigation_settings_label">Settings</string>
 
 
     <string-array name="goal_states_array">
-        <item>Opened</item>
+        <item>Active</item>
+        <item>Archived</item>
         <item>Completed</item>
     </string-array>
+
+    <string-array name="task_states_array">
+        <item>Active</item>
+        <item>Completed</item>
+    </string-array>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="task_tab_text">Task</string>
+    <string name="todo_tab_text">Todo</string>
 </resources>

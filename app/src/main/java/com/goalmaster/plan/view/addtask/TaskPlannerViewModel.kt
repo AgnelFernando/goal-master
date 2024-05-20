@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.entity.PlanTask
 import com.goalmaster.plan.data.source.PlanRepository
@@ -13,40 +13,57 @@ import com.goalmaster.task.data.entity.TaskWithData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
-import java.time.ZoneId
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskPlannerViewModel @Inject constructor(private val repository: TaskRepository,
-                                               private val planRepository: PlanRepository,
-                                               private val taskRepository: TaskRepository
+class TaskPlannerViewModel @Inject constructor(
+    repository: TaskRepository,
+    private val planRepository: PlanRepository
 ) : ViewModel() {
 
-    var taskId = 0L
+    val selectedGoal = MutableStateFlow("All")
 
     lateinit var plan: Plan
 
-    var planTask = MutableLiveData<PlanTask>()
-
     val createPlanTaskEvent = MutableLiveData<Unit>()
-    val placeHolderCreateEvent = MutableLiveData<Unit>()
 
     @ExperimentalCoroutinesApi
-    val allTasks: Flow<List<TaskWithData>> = repository.observeTasksForPlan().stateIn(
+    val allTasksFlow: Flow<List<TaskWithData>> = repository.observeTasksForPlan().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val tasksForPlan = allTasks.transformLatest { td ->
+    val filteredTaskFlow: Flow<List<TaskWithData>> = selectedGoal.combine(allTasksFlow) { g, t ->
+        run {
+            if (g == "All") return@combine t
+            else return@combine t.filter { it.goal.name == g }
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val allTasks = allTasksFlow.transformLatest { td ->
         emit(td.filter { it.task.durationInMin != null }.sortedBy { it.goal.dueDate })
     }.asLiveData(viewModelScope.coroutineContext)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val tasksForPlan = filteredTaskFlow.transformLatest { td ->
+        emit(td.filter { it.task.durationInMin != null }.sortedBy { it.goal.dueDate })
+    }.asLiveData(viewModelScope.coroutineContext)
+
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val availableGoals = allTasksFlow.transformLatest {
+        emit(it.map { td -> td.goal }.toSet().toList())
+    }.asLiveData(viewModelScope.coroutineContext)
 
     fun setup() {
         viewModelScope.launch {
@@ -57,45 +74,10 @@ class TaskPlannerViewModel @Inject constructor(private val repository: TaskRepos
         }
     }
 
-    fun savePlanTask() {
-        planTask
-    }
-
-    fun updateEventId(eventId: Long) {
-        planTask.value ?: return
-        planTask.value!!.eventId = eventId
-    }
-
-    fun createTaskPlan(taskId: Long): TaskWithData {
-        val taskWithData = tasksForPlan.value!!.find { it.task.id == taskId }!!
-        val data = PlanTask(plan.id, taskId, plan.startDate,
+    fun createTaskPlan(taskId: Long, date: LocalDateTime) {
+        val taskWithData = allTasks.value!!.find { it.task.id == taskId }!!
+        val data = PlanTask(plan.id, taskId, date,
             taskWithData.task.durationInMin!!)
-//        viewModelScope.launch {
-//            val result = planRepository.savePlanTask(data)
-//            if (result is Result.Success) {
-                planTask.value = data
-//            }
-//        }
-
-        return taskWithData
-    }
-
-    fun getTaskEventStartTime(): Long {
-        return planTask.value!!.eventTime.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000
-    }
-
-    fun getTaskEventEndTime(): Long {
-        val planTaskValue = planTask.value!!
-        return planTaskValue.eventTime.plusMinutes(planTaskValue.durationInMinutes.toLong())
-            .atZone(ZoneId.systemDefault()).toEpochSecond() * 1000
-    }
-
-    fun updateEventTime() {
-
-    }
-
-    fun saveSelectedPlanTask() {
-        val data = planTask.value ?: return
         viewModelScope.launch {
             val result = planRepository.savePlanTask(data)
             if (result is Result.Success) {

@@ -6,18 +6,24 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.goalmaster.goal.data.entity.Goal
 import com.goalmaster.goal.data.source.GoalDao
+import com.goalmaster.notification.Notification
+import com.goalmaster.notification.NotificationDao
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.source.PlanDao
 import com.goalmaster.plan.data.entity.PlanTask
 import com.goalmaster.plan.data.source.PlanTaskDao
 import com.goalmaster.task.data.entity.Task
+import com.goalmaster.task.data.entity.TaskTimeTracker
 import com.goalmaster.task.data.source.TaskDao
+import com.goalmaster.todo.data.entity.Todo
+import com.goalmaster.todo.data.source.TodoDao
 
 /**
  * The Room database for this app
  */
-@Database(entities = [Goal::class, Task::class, Plan::class, PlanTask::class],
-    version = 2,
+@Database(entities = [Goal::class, Task::class, Plan::class,
+    PlanTask::class, Notification::class, TaskTimeTracker::class, Todo::class],
+    version = 6,
     exportSchema = true
 )
 @TypeConverters(value = [RoomDatabaseConverters::class])
@@ -27,9 +33,13 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
 
+    abstract fun todoDao(): TodoDao
+
     abstract fun planDao(): PlanDao
 
     abstract fun planTaskDao(): PlanTaskDao
+
+    abstract fun notificationDao(): NotificationDao
 
     companion object {
 
@@ -42,17 +52,15 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        val MIGRATION_1_2 = object : Migration(1, 2) {
+        private val MIGRATION = object : Migration(5, 6) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("DROP TABLE PlanTask")
-                database.execSQL("CREATE TABLE PlanTask (" +
-                        "planId INTEGER NOT NULL," +
-                        "taskId INTEGER NOT NULL," +
-                        "eventTime TEXT NOT NULL," +
-                        "durationInMinutes INTEGER NOT NULL," +
-                        "eventId INTEGER DEFAULT 0," +
-                        "status TEXT NOT NULL," +
-                        "PRIMARY KEY (planId, taskId))")
+                database.execSQL("DROP TABLE IF EXISTS `Todo`")
+                database.execSQL("CREATE TABLE Todo (" +
+                        "id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                        "goalId INTEGER NOT NULL," +
+                        "name TEXT NOT NULL," +
+                        "completed INTEGER NOT NULL," +
+                        "created INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP)")
             }
         }
 
@@ -60,7 +68,7 @@ abstract class AppDatabase : RoomDatabase() {
             return Room.databaseBuilder(context, AppDatabase::class.java, "gm-db")
                 .allowMainThreadQueries()
                 .addCallback(CALLBACK)
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION)
                 .build()
         }
 

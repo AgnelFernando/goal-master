@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.goalmaster.goal.data.entity.Goal
 import com.goalmaster.goal.data.source.GoalRepository
-import com.goalmaster.Result
+import com.goalmaster.utils.Result
 import com.goalmaster.goal.data.entity.GoalState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,6 +25,7 @@ class EditGoalViewModel @Inject constructor(private val repository: GoalReposito
     val dod = MutableLiveData<String>()
     val description = MutableLiveData<String?>()
     val dueDate = MutableLiveData<Date?>()
+    val state = MutableLiveData<GoalState>()
 
     val saveGoalEvent = MutableLiveData<Unit>()
     val deleteGoalEvent = MutableLiveData<Unit>()
@@ -61,6 +62,7 @@ class EditGoalViewModel @Inject constructor(private val repository: GoalReposito
         completed.value = data.completedUnits.toString()
         dod.value = data.definitionOfDone
         dueDate.value = data.dueDate
+        state.value = data.state
         _dataLoading.value = false
         isDataLoaded = true
     }
@@ -91,6 +93,20 @@ class EditGoalViewModel @Inject constructor(private val repository: GoalReposito
             val result = repository.deleteGoal(goal.id)
             if (result is Result.Success) {
                 deleteGoalEvent.value = Unit
+            }
+            _dataLoading.value = false
+        }
+    }
+
+    fun archiveGoal() {
+        _dataLoading.value = true
+        goal.state = if (goal.state == GoalState.ARCHIVED)
+            GoalState.ACTIVE else GoalState.ARCHIVED
+
+        viewModelScope.launch {
+            val result = repository.saveGoal(goal)
+            if (result is Result.Success) {
+                saveGoalEvent.value = Unit
             }
             _dataLoading.value = false
         }
