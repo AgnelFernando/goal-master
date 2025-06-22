@@ -42,6 +42,15 @@ class AnalyticsFragment : Fragment(), OnChartValueSelectedListener {
 
     private val viewModel: AnalyticsViewModel by viewModels()
 
+    private val colors = ArrayList<Int>().apply {
+        addAll(ColorTemplate.VORDIPLOM_COLORS.toList())
+        addAll(ColorTemplate.JOYFUL_COLORS.toList())
+        addAll(ColorTemplate.COLORFUL_COLORS.toList())
+        addAll(ColorTemplate.LIBERTY_COLORS.toList())
+        addAll(ColorTemplate.PASTEL_COLORS.toList())
+        add(ColorTemplate.getHoloBlue())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -176,14 +185,7 @@ class AnalyticsFragment : Fragment(), OnChartValueSelectedListener {
             dataSet.selectionShift = 5f
 
             // add a lot of colors
-            dataSet.colors = ArrayList<Int>().apply {
-                addAll(ColorTemplate.VORDIPLOM_COLORS.toList())
-                addAll(ColorTemplate.JOYFUL_COLORS.toList())
-                addAll(ColorTemplate.COLORFUL_COLORS.toList())
-                addAll(ColorTemplate.LIBERTY_COLORS.toList())
-                addAll(ColorTemplate.PASTEL_COLORS.toList())
-                add(ColorTemplate.getHoloBlue())
-            }
+            dataSet.colors = colors
             val data = PieData(dataSet)
             data.setValueFormatter(PercentFormatter())
             data.setValueTextSize(11f)
@@ -228,7 +230,7 @@ class AnalyticsFragment : Fragment(), OnChartValueSelectedListener {
             val spaceForBar = 0.25f
             val barWidth = 0.2f
             val dataSets = ArrayList<IBarDataSet>()
-            val colors = ColorTemplate.COLORFUL_COLORS.toList()
+
             taskDone.forEach { (k, v) ->
                 values = arrayListOf(BarEntry(i++ * spaceForBar + barWidth/2, v))
                 val barDataSet = BarDataSet(values, k)
