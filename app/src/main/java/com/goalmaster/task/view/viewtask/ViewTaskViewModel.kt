@@ -73,7 +73,7 @@ class ViewTaskViewModel @Inject constructor(private val repository: TaskReposito
 
     fun updateTaskState(state: TaskState) {
         val id = taskId.value!!
-        if (task.value?.state != TaskState.PLANNED) return
+//        if (task.value?.state != TaskState.PLANNED) return
         
         viewModelScope.launch {
             repository.updateTaskState(id, state)
