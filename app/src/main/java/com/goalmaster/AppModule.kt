@@ -6,12 +6,6 @@ import com.goalmaster.goal.data.source.DefaultGoalRepository
 import com.goalmaster.goal.data.source.GoalDao
 import com.goalmaster.goal.data.source.GoalRepository
 import com.goalmaster.goal.data.source.LocalGoalDataSource
-import com.goalmaster.notification.DefaultNotificationRepository
-import com.goalmaster.notification.LocalNotificationDataSource
-import com.goalmaster.notification.NotificationDao
-import com.goalmaster.notification.NotificationDataSource
-import com.goalmaster.notification.NotificationRepository
-import com.goalmaster.plan.*
 import com.goalmaster.plan.data.source.*
 import com.goalmaster.task.DefaultTaskRepository
 import com.goalmaster.task.data.source.LocalTaskDataSource
@@ -113,25 +107,7 @@ object AppModule {
         return LocalPlanTaskDataSource(planTaskDao, ioDispatcher)
     }
 
-    @Singleton
-    @Provides
-    fun provideNotificationRepository(dataSource: NotificationDataSource
-    ): NotificationRepository {
-        return DefaultNotificationRepository(dataSource)
-    }
 
-    @Provides
-    fun provideNotificationDao(appDatabase: AppDatabase): NotificationDao {
-        return appDatabase.notificationDao()
-    }
-
-    @Singleton
-    @Provides
-    fun provideLocalNotificationDataSource(notificationDao: NotificationDao,
-                                           ioDispatcher: CoroutineDispatcher)
-    : NotificationDataSource {
-        return LocalNotificationDataSource(notificationDao, ioDispatcher)
-    }
 
     @Provides
     fun provideTodoDao(appDatabase: AppDatabase): TodoDao {

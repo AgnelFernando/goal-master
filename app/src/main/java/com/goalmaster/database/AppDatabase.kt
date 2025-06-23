@@ -6,8 +6,6 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.goalmaster.goal.data.entity.Goal
 import com.goalmaster.goal.data.source.GoalDao
-import com.goalmaster.notification.Notification
-import com.goalmaster.notification.NotificationDao
 import com.goalmaster.plan.data.entity.Plan
 import com.goalmaster.plan.data.source.PlanDao
 import com.goalmaster.plan.data.entity.PlanTask
@@ -22,7 +20,7 @@ import com.goalmaster.todo.data.source.TodoDao
  * The Room database for this app
  */
 @Database(entities = [Goal::class, Task::class, Plan::class,
-    PlanTask::class, Notification::class, TaskTimeTracker::class, Todo::class],
+    PlanTask::class, TaskTimeTracker::class, Todo::class],
     version = 6,
     exportSchema = true
 )
@@ -38,8 +36,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun planDao(): PlanDao
 
     abstract fun planTaskDao(): PlanTaskDao
-
-    abstract fun notificationDao(): NotificationDao
 
     companion object {
 
